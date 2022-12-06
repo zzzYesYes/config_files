@@ -1,0 +1,8 @@
+export PATH=/opt/homebrew/bin:$PATH
+PS1='[\u@\h \W]\$'
+
+# Alias
+alias sleep-on='sudo pmset -a disablesleep 0'
+alias sleep-off='sudo pmset -a disablesleep 1'
+PATH=$PATH:/opt/homebrew/sbin
+alias ls='ls --color=auto -al'
