@@ -15,8 +15,8 @@ set $up k
 set $right l
 
 # Apps
-set $term0 cool-retro-term
-set $term1 alacritty
+set $term0 alacritty
+set $term1 cool-retro-term
 
 set $browser0 firefox
 set $browser1 firefox -private
@@ -27,12 +27,12 @@ set $idel swayidle
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu wofi --show run 
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg ~/Pic/nc.png fill
 #
 # Example configuration:
 #
@@ -215,24 +215,24 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    position top
+    # Use waybar
+    swaybar_command waybar
 
+    # position top
+    
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+    # status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
 
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+    # colors {
+    #     statusline #ffffff
+    #     background #323232
+    #     inactive_workspace #32323200 #32323200 #5c5c5c
+    # }
 }
 
 # Set the boarder and gap
 default_border pixel 3
 gaps inner 10
-
-# Set swaybar
-exec waybar
 
 include /etc/sway/config.d/*
