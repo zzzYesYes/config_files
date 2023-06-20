@@ -20,3 +20,4 @@ end
 if isModuleAvailable("nvim-treesitter.configs") then
     require("treesitterSetup")
 end
+require("lualineSetup")

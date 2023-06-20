@@ -15,6 +15,12 @@ return require('packer').startup({function(use)
 
     use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use 'nvim-tree/nvim-web-devicons'
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.1',
+        requires = { {'nvim-lua/plenary.nvim'} }
+    }
+    use 'nvim-lualine/lualine.nvim'
     
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
