@@ -22,3 +22,4 @@ if isModuleAvailable("nvim-treesitter.configs") then
 end
 require("lualineSetup")
 require("lspzeroSetup")
+require("telescopeSetup")
