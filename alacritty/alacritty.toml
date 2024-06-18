@@ -1,0 +1,28 @@
+import = ["/home/zzzpx0/.config/alacritty/dracula.toml"]
+
+[font]
+size = 12.0
+
+[font.bold]
+family = "TerminessTTF NFM"
+style = "Bold"
+
+[font.bold_italic]
+family = "TerminessTTF NFM"
+style = "Bold Italic"
+
+[font.italic]
+family = "TerminessTTF NFM"
+style = "Italic"
+
+[font.normal]
+family = "TerminessTTF NFM"
+style = "Regular"
+
+[window]
+decorations = "none"
+opacity = 0.9
+
+[window.padding]
+x = 10
+y = 10
