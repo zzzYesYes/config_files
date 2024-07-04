@@ -235,7 +235,7 @@ bar {
 
 # Set the boarder and gap
 default_border pixel 3
-gaps inner 10
+gaps inner 5
 
 # Clipman setup
 exec wl-paste -t text --watch clipman store --no-persist
