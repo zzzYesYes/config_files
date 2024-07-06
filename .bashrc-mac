@@ -1,3 +1,6 @@
+export PATH="/usr/local/bin:$PATH"
+export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
+export PATH=/Users/zzzpx0/.local/bin:$PATH
 export PATH=/opt/homebrew/bin:$PATH
 PS1='[\u@\h \W]\$'
 
@@ -6,3 +9,6 @@ alias sleep-on='sudo pmset -a disablesleep 0'
 alias sleep-off='sudo pmset -a disablesleep 1'
 PATH=$PATH:/opt/homebrew/sbin
 alias ls='ls --color=auto -al'
+. "$HOME/.cargo/env"
+eval "$(starship init bash)"
+eval "$(zoxide init bash)"
