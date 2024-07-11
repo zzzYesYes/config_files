@@ -151,6 +151,11 @@ output * bg ~/Pic/nc.png fill
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 #
+# Volume
+#
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+#
 # Layout stuff:
 #
     # You can "split" the current object of your focus with
