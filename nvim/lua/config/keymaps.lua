@@ -1,4 +1,3 @@
-require("leap").create_default_mappings()
 local wk = require("which-key")
 
 wk.register({
@@ -28,3 +27,6 @@ wk.register({
     t = {"<cmd>TodoQuickFix<cr>","Toggle todo list"},
   },
 }, { prefix = "<leader>" })
+
+local leap = require('leap')
+leap.add_default_mappings()
