@@ -1,5 +1,5 @@
 return {
-  "folke/todo-comments.nvim",
-  event = "BufRead",
-  opts = {},
+    "folke/todo-comments.nvim",
+    event = "BufRead",
+    opts = {},
 }

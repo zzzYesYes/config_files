@@ -1,5 +1,6 @@
 return {
   "wfxr/minimap.vim",
+  event = "BufReadPre",
   build = "cargo install --locked code-minimap",
   opts = {},
   config = function()

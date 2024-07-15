@@ -12,7 +12,7 @@ wk.add({
     { "<leader>Tm", "<cmd>Mason<cr>",                                            desc = "Mason" },
     { "<leader>b",  group = "Bottom Panel" },
     { "<leader>bd", "<cmd>TodoQuickFix<cr>",                                     desc = "Toggle todo list" },
-    { "<leader>bt", "<cmd>ToggleTerm direction=horizontal<cr>",                  desc = "Toggle todo list" },
+    { "<leader>bt", "<cmd>ToggleTerm direction=horizontal<cr>",                  desc = "Toggle terminal" },
     { "<leader>c",  group = "Common Tools" },
     { "<leader>cf", ":lua vim.lsp.buf.format()<cr>",                             desc = "format current buf" },
     { "<leader>ch", "<cmd>noh<cr>",                                              desc = "Clear search highlight" },
@@ -43,6 +43,8 @@ vim.keymap.set({ "n" }, "<C-h>", [[<cmd>wincmd h<cr>]])
 vim.keymap.set({ "n" }, "<C-j>", [[<cmd>wincmd j<cr>]])
 vim.keymap.set({ "n" }, "<C-k>", [[<cmd>wincmd k<cr>]])
 vim.keymap.set({ "n" }, "<C-l>", [[<cmd>wincmd l<cr>]])
+
+vim.keymap.set({"n"}, [[<C-\>]], [[<cmd>ToggleTerm<cr>]])
 
 function _G.set_terminal_keymaps()
     local opts = { buffer = 0 }
