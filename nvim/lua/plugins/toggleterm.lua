@@ -20,6 +20,9 @@ return {
       terminal_mappings = true,
       persist_size = true,
       direction = "float" or "horizontal" or "vertical" or "window",
+      float_opts = {
+          border = "single",
+      },
       close_on_exit = true,
     },
   },
