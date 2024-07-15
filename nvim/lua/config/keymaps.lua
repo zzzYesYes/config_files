@@ -26,7 +26,7 @@ wk.add({
     { "<leader>s",  group = "Search" },
     { "<leader>sB", "<cmd>Telescope file_browser",                               desc = "Open file explorer" },
     { "<leader>sb", "<cmd>Telescope builtin.buffers<cr>",                        desc = "Search current bufferj" },
-    { "<leader>sc", "<cmd>Telescope colorscheme",                                desc = "Search colorscheme" },
+    { "<leader>sc", "<cmd>Telescope colorscheme<cr>",                                desc = "Search colorscheme" },
     { "<leader>sf", "<cmd>Telescope find_files<cr>",                             desc = "Search file by name" },
     { "<leader>sg", "<cmd>Telescope live_grep<cr>",                              desc = "Search with ripgrep" },
     { "<leader>sh", "<cmd>Telescope help_tags<cr>",                              desc = "Search help tags" },
