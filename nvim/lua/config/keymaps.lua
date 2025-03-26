@@ -22,7 +22,7 @@ wk.add({
     { "<leader>r",  group = "Right Panel" },
     { "<leader>rm", "<cmd>MinimapToggle<cr>",                                    desc = "Minimap" },
     { "<leader>rs", "<cmd>SymbolsOutline<cr>",                                   desc = "Symbols Outline" },
-    { "<leader>rt", "<cmd>ToggleTerm direction=vertical<cr>",                    desc = "Symbols Outline" },
+    { "<leader>rt", "<cmd>ToggleTerm direction=vertical<cr>",                    desc = "Vertical Terminal" },
     { "<leader>s",  group = "Search" },
     { "<leader>sB", "<cmd>Telescope file_browser",                               desc = "Open file explorer" },
     { "<leader>sb", "<cmd>Telescope builtin.buffers<cr>",                        desc = "Search current bufferj" },

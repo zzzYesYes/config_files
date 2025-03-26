@@ -1,11 +1,12 @@
-import = ["/home/zzzpx0/.config/alacritty/dracula.toml"]
+
+[env]
+TERM = "xterm-256color"
 
 [font]
-size = 12.0
+size = 11.0
 
 [font.normal]
-family = "TerminessTTF NF"
-style = "Medium"
+family = "BigBlueTermPlus Nerd Font Propo"
 
 [window]
 decorations = "none"
@@ -14,3 +15,6 @@ opacity = 0.9
 [window.padding]
 x = 10
 y = 10
+
+[general]
+import = ["~/.config/alacritty/catppuccin-mocha.toml"]

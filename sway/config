@@ -16,10 +16,8 @@ set $right l
 
 # Apps
 set $term0 alacritty
-set $term1 cool-retro-term
 
 set $browser0 firefox
-set $browser1 firefox -private
 set $virt-m virt-manager
 
 set $lock swaylock
@@ -28,12 +26,12 @@ set $idle swayidle
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu wofi --show run 
+set $menu rofi -show run 
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Pic/nc.png fill
+output * bg ~/Pic/firewatch02.png fill
 #
 # Example configuration:
 #
@@ -49,6 +47,7 @@ output * bg ~/Pic/nc.png fill
      	# timeout 300 'swaylock -f -c 000000' \
      	# timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
      	# before-sleep 'swaylock -f -c 000000'
+    exec --no-startup-id fcitx5 -d
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -74,15 +73,13 @@ output * bg ~/Pic/nc.png fill
 #
     # Start apps
     bindsym $mod+Return exec $term0
-    bindsym $mod+Shift+t exec $term1
     bindsym $mod+Shift+f exec $browser0
-    bindsym $mod+Shift+p exec $browser1
     bindsym $mod+Shift+v exec $virt-m
     bindsym $mod+Shift+o exec $lock
     bindsym $mod+Shift+i exec $idle
 
     # Kill focused window
-    bindsym $mod+Shift+q kill
+    bindsym $mod+q kill
 
     # Start your launcher
     bindsym $mod+d exec $menu
@@ -99,6 +96,11 @@ output * bg ~/Pic/nc.png fill
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+    # Hardware
+    bindsym XF86MonBrightnessUp exec brightnessctl set 10%+
+    bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
+
 #
 # Moving around:
 #
@@ -150,6 +152,12 @@ output * bg ~/Pic/nc.png fill
     bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
+#
+# Volume
+#
+    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
 #
 # Layout stuff:
 #
