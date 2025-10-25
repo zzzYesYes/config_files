@@ -6,6 +6,7 @@ vim.o.sta = true
 vim.o.sw = 4
 vim.o.wrap = false
 vim.o.scl = "no"
+vim.opt.tabstop = 4
 --[[ vim.o.cc = "75"
 vim.opt.list = true
 vim.opt.listchars:append("space:·")

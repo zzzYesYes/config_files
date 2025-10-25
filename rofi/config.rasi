@@ -7,4 +7,6 @@ configuration {
     font: "BigBlueTermPlusNerdFontPropo-Regular 12";
 }
 
-@theme "/home/zzz/.local/share/rofi/themes/squared-nord.rasi"
+//@theme "/home/zzz/.local/share/rofi/themes/squared-nord.rasi"
+
+@theme "/usr/share/rofi/themes/material.rasi"

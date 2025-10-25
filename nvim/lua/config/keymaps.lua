@@ -26,7 +26,7 @@ wk.add({
     { "<leader>s",  group = "Search" },
     { "<leader>sB", "<cmd>Telescope file_browser",                               desc = "Open file explorer" },
     { "<leader>sb", "<cmd>Telescope builtin.buffers<cr>",                        desc = "Search current bufferj" },
-    { "<leader>sc", "<cmd>Telescope colorscheme<cr>",                                desc = "Search colorscheme" },
+    { "<leader>sc", "<cmd>Telescope colorscheme<cr>",                            desc = "Search colorscheme" },
     { "<leader>sf", "<cmd>Telescope find_files<cr>",                             desc = "Search file by name" },
     { "<leader>sg", "<cmd>Telescope live_grep<cr>",                              desc = "Search with ripgrep" },
     { "<leader>sh", "<cmd>Telescope help_tags<cr>",                              desc = "Search help tags" },
@@ -36,6 +36,9 @@ wk.add({
     { "<leader>tn", "<cmd>BufferNext<cr>",                                       desc = "next tab" },
     { "<leader>tp", "<cmd>BufferPrevious<cr>",                                   desc = "previous tab" },
     { "<leader>ts", "<cmd>BufferPick<cr>",                                       desc = "select tab" },
+    { "<leader>q", "<cmd>q!<cr>",                                                desc = "quit" },
+    { "<leader>w", "<cmd>w!<cr>",                                                desc = "write" },
+    { "<leader>x", "<cmd>x!<cr>",                                                desc = "write and quit" },
 })
 
 -- Mappings
