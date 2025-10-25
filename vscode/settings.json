@@ -1,0 +1,101 @@
+{
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.colorCustomizations": {
+        "terminalCursor.background": "#F5E0DC",
+        "terminalCursor.foreground": "#F5E0DC",
+        "terminal.selectionBackground": "#585B70",
+        "terminal.background": "#1E1E2E",
+        "terminal.foreground": "#CDD6F4",
+        "terminal.ansiBlack": "#45475A",
+        "terminal.ansiRed": "#F38BA8",
+        "terminal.ansiGreen": "#A6E3A1",
+        "terminal.ansiYellow": "#F9E2AF",
+        "terminal.ansiBlue": "#89B4FA",
+        "terminal.ansiPurple": "#F5C2E7",
+        "terminal.ansiCyan": "#94E2D5",
+        "terminal.ansiWhite": "#BAC2DE",
+        "terminal.ansiBrightBlack": "#585B70",
+        "terminal.ansiBrightRed": "#F38BA8",
+        "terminal.ansiBrightGreen": "#A6E3A1",
+        "terminal.ansiBrightYellow": "#F9E2AF",
+        "terminal.ansiBrightBlue": "#89B4FA",
+        "terminal.ansiBrightPurple": "#F5C2E7",
+        "terminal.ansiBrightCyan": "#94E2D5",
+        "terminal.ansiBrightWhite": "#A6ADC8"
+    },
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
+    "explorer.confirmDelete": false,
+    "editor.detectIndentation": false,
+    "markdown-pdf.outputDirectory": "C:\\Users\\zzz\\Documents",
+    "markdown-pdf.executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "redhat.telemetry.enabled": false,
+    "terminal.integrated.tabs.defaultColor": "terminal.ansiBlack",
+    "editor.fontFamily": "BigBlueTermPlus Nerd Font Propo",
+    "editor.renderWhitespace": "all",
+    "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
+    "workbench.preferredHighContrastColorTheme": "Catppuccin Mocha",
+    "window.systemColorTheme": "dark",
+    "editor.minimap.enabled": false,
+    "editor.lineNumbers": "relative",
+
+    "vim.leader": "<Space>",
+    "vim.hlsearch": true,
+    "vim.normalModeKeyBindingsNonRecursive": [
+        { "before": ["<S-h>"], "commands": [":bprevious"] },
+        { "before": ["<S-l>"], "commands": [":bnext"] },
+
+        { "before": ["leader", "v"], "commands": [":vsplit"] },
+        { "before": ["leader", "s"], "commands": [":split"] },
+
+        {
+            "before": ["leader", "h"],
+            "commands": ["workbench.action.focusLeftGroup"]
+        },
+        {
+            "before": ["leader", "j"],
+            "commands": ["workbench.action.focusBelowGroup"]
+        },
+        {
+            "before": ["leader", "k"],
+            "commands": ["workbench.action.focusAboveGroup"]
+        },
+        {
+            "before": ["leader", "l"],
+            "commands": ["workbench.action.focusRightGroup"]
+        },
+        { "before": ["leader", "w"], "commands": [":w!"] },
+        { "before": ["leader", "q"], "commands": [":q!"] },
+        { "before": ["leader", "x"], "commands": [":x!"] },
+        {
+            "before": ["[", "d"],
+            "commands": ["editor.action.marker.prev"]
+        },
+        {
+            "before": ["]", "d"],
+            "commands": ["editor.action.marker.next"]
+        },
+        {
+            "before": ["<leader>", "c", "a"],
+            "commands": ["editor.action.quickFix"]
+        },
+        { "before": ["leader", "f"], "commands": ["workbench.action.quickOpen"] },
+        { "before": ["leader", "p"], "commands": ["editor.action.formatDocument"] },
+        {
+            "before": ["g", "h"],
+            "commands": ["editor.action.showDefinitionPreviewHover"]
+        }
+    ],
+        "vim.visualModeKeyBindings": [
+        { "before": ["<"], "commands": ["editor.action.outdentLines"] },
+        { "before": [">"], "commands": ["editor.action.indentLines"] },
+        { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
+        { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
+        { "before": ["leader", "c"], "commands": ["editor.action.commentLine"] }
+    ],
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+}

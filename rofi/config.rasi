@@ -10,3 +10,4 @@ configuration {
 //@theme "/home/zzz/.local/share/rofi/themes/squared-nord.rasi"
 
 @theme "/usr/share/rofi/themes/material.rasi"
+// @theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
