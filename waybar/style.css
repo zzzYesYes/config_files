@@ -124,7 +124,15 @@ button:hover {
     margin-right: 0;
 }
 
-#clock {
+#mpd
+#mpd.stopped
+#mpd.disconnected
+#mpd.paused
+{
+    background-color: rgba(0,0,0,0);
+}
+
+#clock{
     background-color: rgba(0,0,0,0);
 }
 
@@ -246,7 +254,7 @@ label:focus {
 }
 
 #tray {
-    background-color: #2980b9;
+    background-color: rgba(0,0,0,0);
     color: #ffffff;
 }
 
@@ -268,6 +276,7 @@ label:focus {
     color: #2d3436;
 }
 
+/*
 #mpd {
     background-color: #66cc99;
     color: #2a5c45;
@@ -284,6 +293,7 @@ label:focus {
 #mpd.paused {
     background-color: #51a37a;
 }
+*/
 
 #language {
     margin: 6px 3px;
