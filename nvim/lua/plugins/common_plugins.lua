@@ -16,11 +16,7 @@ return {
         opts = { use_default_keymaps = false, max_join_length = 150 },
     },
     {
-        "simrat39/symbols-outline.nvim",
-        opts = {},
-    },
-    {
-        "iamcco/markdown-preview.nvim",
+       "iamcco/markdown-preview.nvim",
         build = "cd app && npm install",
         ft = "markdown",
         init = function()

@@ -1,6 +1,5 @@
 local wk = require("which-key")
 require("telescope.builtin")
-require("telescope").load_extension("projects")
 -- Suggested Spec:
 wk.add({
     { "<leader>S",  group = "Session" },
@@ -21,7 +20,6 @@ wk.add({
     { "<leader>le", "<cmd>Neotree toggle<cr>",                                   desc = "File Explorer" },
     { "<leader>r",  group = "Right Panel" },
     { "<leader>rm", "<cmd>MinimapToggle<cr>",                                    desc = "Minimap" },
-    { "<leader>rs", "<cmd>SymbolsOutline<cr>",                                   desc = "Symbols Outline" },
     { "<leader>rt", "<cmd>ToggleTerm direction=vertical<cr>",                    desc = "Vertical Terminal" },
     { "<leader>s",  group = "Search" },
     { "<leader>sB", "<cmd>Telescope file_browser",                               desc = "Open file explorer" },
@@ -30,7 +28,6 @@ wk.add({
     { "<leader>sf", "<cmd>Telescope find_files<cr>",                             desc = "Search file by name" },
     { "<leader>sg", "<cmd>Telescope live_grep<cr>",                              desc = "Search with ripgrep" },
     { "<leader>sh", "<cmd>Telescope help_tags<cr>",                              desc = "Search help tags" },
-    { "<leader>sp", "<cmd>Telescope projects<cr>",                               desc = "Search projects" },
     { "<leader>t",  group = "Tab lines" },
     { "<leader>tc", "<cmd>BufferClose<cr>",                                      desc = "close tab" },
     { "<leader>tn", "<cmd>BufferNext<cr>",                                       desc = "next tab" },
@@ -40,7 +37,6 @@ wk.add({
     { "<leader>w", "<cmd>w!<cr>",                                                desc = "write" },
     { "<leader>x", "<cmd>x!<cr>",                                                desc = "write and quit" },
 })
-
 -- Mappings
 vim.keymap.set({ "n" }, "<C-h>", [[<cmd>wincmd h<cr>]])
 vim.keymap.set({ "n" }, "<C-j>", [[<cmd>wincmd j<cr>]])
@@ -63,5 +59,3 @@ end
 -- if you only want these mappings for toggle term use term://*toggleterm#* instead
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
-local leap = require('leap')
-leap.add_default_mappings()
