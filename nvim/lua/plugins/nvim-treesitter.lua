@@ -1,5 +1,6 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master", -- this config uses the legacy API; main branch removed it
     version = false, -- last release is way too old and doesn't work on Windows
     build = ":TSUpdate",
     event = "VeryLazy",
