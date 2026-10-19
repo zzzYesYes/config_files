@@ -1,79 +1,52 @@
+local ensure_installed = {
+    "bash",
+    "c",
+    "diff",
+    "html",
+    "javascript",
+    "jsdoc",
+    "json",
+    "lua",
+    "luadoc",
+    "luap",
+    "markdown",
+    "markdown_inline",
+    "printf",
+    "python",
+    "query",
+    "regex",
+    "rust",
+    "ron",
+    "toml",
+    "tsx",
+    "typescript",
+    "vim",
+    "vimdoc",
+    "xml",
+    "yaml",
+}
+
 return {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master", -- this config uses the legacy API; main branch removed it
-    version = false, -- last release is way too old and doesn't work on Windows
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
-    event = "VeryLazy",
-    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-    init = function(plugin)
-        -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
-        -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
-        -- no longer trigger the **nvim-treesitter** module to be loaded in time.
-        -- Luckily, the only things that those plugins need are the custom queries, which we make available
-        -- during startup.
-        require("lazy.core.loader").add_to_rtp(plugin)
-        require("nvim-treesitter.query_predicates")
+    config = function()
+        local treesitter = require("nvim-treesitter")
+
+        treesitter.install(ensure_installed)
+
+        vim.api.nvim_create_autocmd("FileType", {
+            callback = function(args)
+                local lang = vim.treesitter.language.get_lang(args.match) or args.match
+                if not vim.list_contains(ensure_installed, lang) then
+                    return
+                end
+
+                if pcall(vim.treesitter.start, args.buf, lang) then
+                    vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                end
+            end,
+        })
     end,
-    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-    keys = {
-        { "<C-space>", desc = "Increment Selection" },
-        { "<bs>",      desc = "Decrement Selection", mode = "x" },
-    },
-    opts_extend = { "ensure_installed" },
-    ---@type TSConfig
-    ---@diagnostic disable-next-line: missing-fields
-    opts = {
-        highlight = { enable = true },
-        indent = { enable = true },
-        ensure_installed = {
-            "bash",
-            "c",
-            "diff",
-            "html",
-            "javascript",
-            "jsdoc",
-            "json",
-            "jsonc",
-            "lua",
-            "luadoc",
-            "luap",
-            "markdown",
-            "markdown_inline",
-            "printf",
-            "python",
-            "query",
-            "regex",
-            "rust",
-            "ron",
-            "toml",
-            "tsx",
-            "typescript",
-            "vim",
-            "vimdoc",
-            "xml",
-            "yaml",
-        },
-        incremental_selection = {
-            enable = true,
-            keymaps = {
-                init_selection = "<C-space>",
-                node_incremental = "<C-space>",
-                scope_incremental = false,
-                node_decremental = "<bs>",
-            },
-        },
-        textobjects = {
-            move = {
-                enable = true,
-                goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
-                goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
-                goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
-                goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
-            },
-        },
-        rainbow = {
-            enable = true,
-            extended_mode = true,
-        },
-    },
 }
