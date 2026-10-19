@@ -63,15 +63,15 @@ function M.cd()
     vim.api.nvim_set_current_dir(M.root())
 end
 
+function M.open_dashboard()
+    if show_dashboard then
+        require("config.dashboard").open()
+    end
+end
+
 if opened_directory then
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
-end
-
-if show_dashboard then
-    vim.schedule(function()
-        require("config.dashboard").open()
-    end)
 end
 
 return M

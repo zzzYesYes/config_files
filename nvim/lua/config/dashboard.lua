@@ -30,35 +30,43 @@ local function pad_lines(lines)
     return lines
 end
 
-local function cowsay()
-    if vim.fn.executable("fortune") ~= 1 or vim.fn.executable("cowsay") ~= 1 then
-        return nil
+local function has_cowsay()
+    return vim.fn.executable("fortune") == 1 and vim.fn.executable("cowsay") == 1
+end
+
+local function request_cowsay(callback)
+    if not has_cowsay() then
+        return
     end
 
-    local fortune = vim.system({ "fortune", "-s" }, { text = true }):wait()
-    if fortune.code ~= 0 or fortune.stdout == "" then
-        return nil
-    end
+    vim.system({ "fortune", "-s" }, { text = true }, function(fortune)
+        if fortune.code ~= 0 or fortune.stdout == "" then
+            return
+        end
 
-    local cow = vim.system({ "cowsay", "-W", "60" }, {
-        stdin = fortune.stdout,
-        text = true,
-    }):wait()
-    if cow.code ~= 0 or cow.stdout == "" then
-        return nil
-    end
+        vim.system({ "cowsay", "-W", "60" }, {
+            stdin = fortune.stdout,
+            text = true,
+        }, function(cow)
+            if cow.code ~= 0 or cow.stdout == "" then
+                return
+            end
 
-    return vim.split(vim.trim(cow.stdout), "\n", { plain = true })
+            local lines = vim.split(vim.trim(cow.stdout), "\n", { plain = true })
+            vim.schedule(function()
+                callback(pad_lines(lines))
+            end)
+        end)
+    end)
 end
 
 function M.header()
-    local lines = cowsay()
-    if not lines then
-        local has_unicode = vim.o.encoding == "utf-8" and vim.fn.strdisplaywidth("█") == 1
-        lines = vim.deepcopy(has_unicode and unicode_logo or ascii_logo)
+    if has_cowsay() then
+        return {}
     end
 
-    return pad_lines(lines)
+    local has_unicode = vim.o.encoding == "utf-8" and vim.fn.strdisplaywidth("█") == 1
+    return pad_lines(vim.deepcopy(has_unicode and unicode_logo or ascii_logo))
 end
 
 function M.project()
@@ -115,6 +123,18 @@ function M.open()
     vim.api.nvim_set_option_value("signcolumn", "no", { win = 0 })
     vim.api.nvim_set_option_value("colorcolumn", "", { win = 0 })
     M.recenter(vim.api.nvim_get_current_win())
+
+    request_cowsay(function(header)
+        if not vim.api.nvim_buf_is_valid(buffer) or vim.bo[buffer].filetype ~= "startup" then
+            return
+        end
+
+        vim.list_extend(header, { "", require("config.project").root() })
+        vim.b[buffer].dashboard_content = header
+        for _, window in ipairs(vim.fn.win_findbuf(buffer)) do
+            M.recenter(window)
+        end
+    end)
 end
 
 function M.setup()
