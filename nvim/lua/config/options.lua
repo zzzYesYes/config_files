@@ -1,4 +1,4 @@
-vim.o.acd = true
+vim.o.acd = false
 vim.o.et = true
 vim.o.nu = true
 vim.o.rnu = true
