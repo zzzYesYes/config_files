@@ -16,6 +16,7 @@ wk.add({
     { "<leader>cf", ":lua vim.lsp.buf.format()<cr>",                             desc = "format current buf" },
     { "<leader>ch", "<cmd>noh<cr>",                                              desc = "Clear search highlight" },
     { "<leader>cr", function() require("config.project").cd() end,                 desc = "Go to project root" },
+    { "<leader>h",  group = "Hydra" },
     { "<leader>l",  group = "Left Panel" },
     { "<leader>le", function() require("config.project").neo_tree() end,           desc = "File Explorer" },
     { "<leader>r",  group = "Right Panel" },
