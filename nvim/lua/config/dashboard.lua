@@ -101,6 +101,23 @@ function M.open()
 end
 
 function M.setup()
+    vim.api.nvim_create_autocmd("BufEnter", {
+        group = vim.api.nvim_create_augroup("dashboard_on_last_buffer", { clear = true }),
+        callback = function(args)
+            vim.schedule(function()
+                if not vim.api.nvim_buf_is_valid(args.buf)
+                    or vim.api.nvim_get_current_buf() ~= args.buf
+                    or not vim.b[args.buf].empty_buffer
+                    or vim.bo[args.buf].modified
+                then
+                    return
+                end
+
+                M.open()
+            end)
+        end,
+    })
+
     require("startup").setup({
         header = {
             type = "text",
