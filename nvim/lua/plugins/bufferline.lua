@@ -7,6 +7,9 @@ return {
     init = function() vim.g.barbar_auto_setup = false end,
     opts = {
         animation = false,
+        icons = {
+            button = " ",
+        },
         sidebar_filetypes = {
             -- Use the default values: {event = 'BufWinLeave', text = '', align = 'left'}
             NvimTree = true,
