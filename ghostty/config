@@ -1,0 +1,5 @@
+theme = Catppuccin Mocha
+font-family = BigBlueTermPlus Nerd Font Mono
+
+# treat Option as Alt/Meta (for tmux M- bindings, shell word jumps, etc.)
+macos-option-as-alt = true

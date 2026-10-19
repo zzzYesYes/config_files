@@ -1,82 +1,69 @@
-local lspconfig = require("lspconfig")
-
 local capabilities = vim.tbl_deep_extend(
   "force",
   vim.lsp.protocol.make_client_capabilities(),
   require("cmp_nvim_lsp").default_capabilities()
 )
 
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
+vim.lsp.config("*", {
+  capabilities = capabilities,
+})
 
-  local opts = { noremap = true, silent = true }
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(event)
+    local function telescope(method)
+      return function()
+        require("telescope.builtin")[method]()
+      end
+    end
 
-  buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
-  buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
-  buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-  buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
-  buf_set_keymap("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
-  buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
-  buf_set_keymap("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-  buf_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-end
+    local opts = { buffer = event.buf }
+    vim.keymap.set("n", "grd", telescope("lsp_definitions"),
+      vim.tbl_extend("force", opts, { desc = "LSP definitions" }))
+    vim.keymap.set("n", "grr", telescope("lsp_references"),
+      vim.tbl_extend("force", opts, { desc = "LSP references" }))
+    vim.keymap.set("n", "gri", telescope("lsp_implementations"),
+      vim.tbl_extend("force", opts, { desc = "LSP implementations" }))
+    vim.keymap.set("n", "grt", telescope("lsp_type_definitions"),
+      vim.tbl_extend("force", opts, { desc = "LSP type definitions" }))
+    vim.keymap.set("n", "gO", telescope("lsp_document_symbols"),
+      vim.tbl_extend("force", opts, { desc = "LSP document symbols" }))
+  end,
+})
+
+vim.lsp.config("lua_ls", {
+  settings = {
+    Lua = {
+      runtime = { version = "LuaJIT" },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME,
+          "/usr/share/hypr/stubs/",
+          "${3rd}/luv/library",
+        },
+      },
+    },
+  },
+})
+
+vim.lsp.config("pyright", {
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = "basic",
+      },
+    },
+  },
+})
 
 require("mason").setup({
-    PATH = "append"
+  PATH = "append",
 })
+
 require("mason-lspconfig").setup({
   ensure_installed = {
     "lua_ls",
     "pyright",
     "clangd",
-  },
-  handlers = {
-    ["lua_ls"] = function()
-      lspconfig.lua_ls.setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-        settings = {
-          Lua = {
-            runtime = { version = "LuaJIT" },
-            workspace = {
-              checkThirdParty = false,
-              library = {
-                vim.env.VIMRUNTIME,
-                "/usr/share/hypr/stubs/",
-                "${3rd}/luv/library",
-              },
-            },
-          },
-        },
-      })
-    end,
-    ["pyright"] = function()
-      lspconfig.pyright.setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-        settings = {
-          python = {
-            analysis = {
-              extraPaths = { "./.venv/lib/python3.x/site-packages" },
-              typeCheckingMode = "basic",
-            },
-          },
-        },
-      })
-    end,
-    ["clangd"] = function()
-      lspconfig.clangd.setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-      })
-    end,
-    function(servername)
-      lspconfig[servername].setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-      })
-    end,
   },
 })

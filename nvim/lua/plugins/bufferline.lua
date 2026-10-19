@@ -7,6 +7,9 @@ return {
     init = function() vim.g.barbar_auto_setup = false end,
     opts = {
         animation = false,
+        icons = {
+            button = " ",
+        },
         sidebar_filetypes = {
             -- Use the default values: {event = 'BufWinLeave', text = '', align = 'left'}
             NvimTree = true,
@@ -16,7 +19,7 @@ return {
                 align = 'center', -- *optionally* specify an alignment (either 'left', 'center', or 'right')
             },
             -- Or, specify the event which the sidebar executes when leaving:
-            ['neo-tree'] = { event = 'BufWipeout' },
+            ['neo-tree'] = true,
             -- Or, specify all three
             Outline = { event = 'BufWinLeave', text = 'symbols-outline', align = 'right' },
         },
