@@ -8,11 +8,11 @@ return {
             mode = "n",
             body = "<leader>hr",
             hint = [[
-   Resize Window
+   Move Split Divider
 
-       _k_: taller
- _h_: narrower  _l_: wider
-       _j_: shorter
+       _k_: up
+ _h_: left      _l_: right
+       _j_: down
 
  _q_ or _<Esc>_: exit
 ]],
@@ -27,10 +27,10 @@ return {
                 },
             },
             heads = {
-                { "h", "<cmd>vertical resize -2<cr>", { desc = "Narrower" } },
-                { "j", "<cmd>resize -2<cr>", { desc = "Shorter" } },
-                { "k", "<cmd>resize +2<cr>", { desc = "Taller" } },
-                { "l", "<cmd>vertical resize +2<cr>", { desc = "Wider" } },
+                { "h", function() require("config.resize").move_divider("h") end, { desc = "Move divider left" } },
+                { "j", function() require("config.resize").move_divider("j") end, { desc = "Move divider down" } },
+                { "k", function() require("config.resize").move_divider("k") end, { desc = "Move divider up" } },
+                { "l", function() require("config.resize").move_divider("l") end, { desc = "Move divider right" } },
                 { "q", nil, { exit = true, desc = "Exit" } },
                 { "<Esc>", nil, { exit = true, desc = false } },
             },
