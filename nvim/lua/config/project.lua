@@ -2,12 +2,14 @@ local M = {}
 
 local startup_dir = vim.uv.cwd()
 local opened_directory = false
+local show_dashboard = vim.fn.argc() == 0
 
 for _, arg in ipairs(vim.fn.argv()) do
     local path = vim.fs.normalize(vim.fn.fnamemodify(arg, ":p"))
     if vim.fn.isdirectory(path) == 1 then
         startup_dir = path
         opened_directory = true
+        show_dashboard = true
         break
     end
 end
@@ -44,12 +46,16 @@ function M.file_browser()
 end
 
 function M.neo_tree()
+    local manager = require("neo-tree.sources.manager")
+    local state = manager.get_state("filesystem")
+    local is_open = state and state.winid and vim.api.nvim_win_is_valid(state.winid)
+
     require("neo-tree.command").execute({
-        action = "toggle",
+        action = is_open and "close" or "show",
         source = "filesystem",
         position = "left",
         dir = M.root(),
-        reveal = true,
+        reveal = not is_open,
     })
 end
 
@@ -58,20 +64,14 @@ function M.cd()
 end
 
 if opened_directory then
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = "neo-tree",
-        once = true,
-        callback = function()
-            vim.schedule(function()
-                require("neo-tree.command").execute({
-                    action = "focus",
-                    source = "filesystem",
-                    position = "left",
-                    dir = M.root(),
-                })
-            end)
-        end,
-    })
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+end
+
+if show_dashboard then
+    vim.schedule(function()
+        require("config.dashboard").open()
+    end)
 end
 
 return M

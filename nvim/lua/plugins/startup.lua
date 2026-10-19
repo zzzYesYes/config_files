@@ -1,7 +1,9 @@
 return {
     "startup-nvim/startup.nvim",
-    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    lazy = false,
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     config = function()
-        require("startup").setup()
-    end
+        vim.g.startup_disable_on_startup = true
+        require("config.dashboard").setup()
+    end,
 }
