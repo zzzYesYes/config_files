@@ -65,26 +65,42 @@ function M.project()
     return { require("config.project").root() }
 end
 
+function M.recenter(window)
+    if not vim.api.nvim_win_is_valid(window) then
+        return
+    end
+
+    local buffer = vim.api.nvim_win_get_buf(window)
+    local content = vim.b[buffer].dashboard_content
+    if vim.bo[buffer].filetype ~= "startup" or type(content) ~= "table" then
+        return
+    end
+
+    content = vim.deepcopy(content)
+    local width = vim.api.nvim_win_get_width(window)
+    for index, line in ipairs(content) do
+        local left_padding = math.max(0, math.floor((width - vim.fn.strdisplaywidth(line)) / 2))
+        content[index] = string.rep(" ", left_padding) .. line
+    end
+
+    local height = vim.api.nvim_win_get_height(window)
+    local top_padding = math.max(0, math.floor((height - #content) / 2) - 1)
+    local lines = vim.fn['repeat']({ "" }, top_padding)
+    vim.list_extend(lines, content)
+
+    vim.api.nvim_set_option_value("modifiable", true, { buf = buffer })
+    vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
+    vim.api.nvim_set_option_value("modifiable", false, { buf = buffer })
+end
+
 function M.open()
     local previous_buffer = vim.api.nvim_get_current_buf()
     local buffer = vim.api.nvim_create_buf(false, true)
     local content = M.header()
     vim.list_extend(content, { "", require("config.project").root() })
 
-    local width = vim.api.nvim_win_get_width(0)
-    for index, line in ipairs(content) do
-        local left_padding = math.max(0, math.floor((width - vim.fn.strdisplaywidth(line)) / 2))
-        content[index] = string.rep(" ", left_padding) .. line
-    end
-
-    local height = vim.api.nvim_win_get_height(0)
-    local top_padding = math.max(0, math.floor((height - #content) / 2) - 1)
-    local lines = vim.fn['repeat']({ "" }, top_padding)
-    vim.list_extend(lines, content)
-
-    vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
+    vim.b[buffer].dashboard_content = content
     vim.api.nvim_set_option_value("filetype", "startup", { buf = buffer })
-    vim.api.nvim_set_option_value("modifiable", false, { buf = buffer })
     vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buffer })
     vim.api.nvim_win_set_buf(0, buffer)
 
@@ -98,11 +114,26 @@ function M.open()
     vim.api.nvim_set_option_value("foldcolumn", "0", { win = 0 })
     vim.api.nvim_set_option_value("signcolumn", "no", { win = 0 })
     vim.api.nvim_set_option_value("colorcolumn", "", { win = 0 })
+    M.recenter(vim.api.nvim_get_current_win())
 end
 
 function M.setup()
+    local group = vim.api.nvim_create_augroup("dashboard", { clear = true })
+
+    vim.api.nvim_create_autocmd("WinResized", {
+        group = group,
+        callback = function()
+            local windows = vim.deepcopy(vim.v.event.windows or {})
+            vim.schedule(function()
+                for _, window in ipairs(windows) do
+                    M.recenter(window)
+                end
+            end)
+        end,
+    })
+
     vim.api.nvim_create_autocmd("BufEnter", {
-        group = vim.api.nvim_create_augroup("dashboard_on_last_buffer", { clear = true }),
+        group = group,
         callback = function(args)
             vim.schedule(function()
                 if not vim.api.nvim_buf_is_valid(args.buf)

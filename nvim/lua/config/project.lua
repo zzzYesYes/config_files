@@ -51,7 +51,7 @@ function M.neo_tree()
     local is_open = state and state.winid and vim.api.nvim_win_is_valid(state.winid)
 
     require("neo-tree.command").execute({
-        action = is_open and "close" or "show",
+        action = is_open and "close" or "focus",
         source = "filesystem",
         position = "left",
         dir = M.root(),
