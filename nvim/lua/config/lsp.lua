@@ -56,6 +56,8 @@ vim.lsp.config("pyright", {
   },
 })
 
+vim.lsp.enable("jdtls")
+
 require("mason").setup({
   PATH = "append",
 })
