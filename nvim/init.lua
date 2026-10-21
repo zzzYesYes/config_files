@@ -1,8 +1,9 @@
 vim.opt.termguicolors = true
-require("config.project")
+local project = require("config.project")
+project.cd()
 require("config.options")
 require("config.lazy")
-require("config.project").open_dashboard()
+project.open_dashboard()
 require("config.lsp")
 require("config.keymaps")
 require("config.cmp")
