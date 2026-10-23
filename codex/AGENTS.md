@@ -53,3 +53,16 @@ Current links:
 - After changing Markdown, run this checker from the project root:
   `rtk python3 ~/config_files/codex/scripts/check-markdown-line-length.py .`
 
+# Plan review
+
+For substantial planning tasks:
+
+1. Draft the plan without editing project files.
+2. Spawn one read-only reviewer subagent with the current context.
+3. Ask the reviewer to verify the plan against the repository and identify incorrect
+   assumptions, missing dependencies, ordering problems, risks, and missing tests.
+4. Wait for the review, then validate each finding before applying it.
+5. Revise the plan using valid findings and explain any rejected findings.
+6. Present the final plan with a brief summary of the resolved review findings.
+
+This instruction explicitly authorizes one reviewer subagent for each substantial planning task.
