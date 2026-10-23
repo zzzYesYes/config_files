@@ -39,7 +39,7 @@ Current links:
 - `~/.config/btop` -> `~/config_files/btop`
 - `~/.config/starship.toml` -> `~/config_files/starship/starship.toml`
 - `~/.config/ghostty/config` -> `~/config_files/ghostty/config`
-- `~/AGENTS.md` -> `~/config_files/codex/AGENTS.md`
+- `~/AGENTS.md` -> `~/config_files/agents/AGENTS.md`
 
 # Global Markdown documentation
 
@@ -51,7 +51,7 @@ Current links:
 - Cross-link focused documents from the project index or primary investigation document.
 - Keep detailed references in the focused document they support.
 - After changing Markdown, run this checker from the project root:
-  `rtk python3 ~/config_files/codex/scripts/check-markdown-line-length.py .`
+  `rtk python3 ~/config_files/agents/scripts/check-markdown-line-length.py .`
 
 # Plan review
 
