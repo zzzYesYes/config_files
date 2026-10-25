@@ -102,8 +102,8 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border   = { colors = {"rgba(cba6f7ee)", "rgba(89b4faee)"}, angle = 45 },
+            inactive_border = "rgba(585b70aa)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -299,6 +299,9 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Toggle touchpad
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggle-touchpad.sh"))
+
+-- Toggle bluetooth
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggle-bluetooth.sh"))
 
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
