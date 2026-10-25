@@ -1,0 +1,38 @@
+{
+  "positionX": "right",
+  "positionY": "top",
+  "layer": "overlay",
+  "control-center-margin-top": 6,
+  "control-center-margin-right": 6,
+  "control-center-width": 400,
+  "notification-icon-size": 48,
+  "notification-window-width": 360,
+  "timeout": 6,
+  "widgets": [
+    "title",
+    "volume",
+    "backlight",
+    "mpris",
+    "notifications"
+  ],
+  "widget-config": {
+    "title": {
+      "text": "Control Center",
+      "clear-all-button": true,
+      "button-text": " Clear"
+    },
+    "volume": {
+      "label": " Output",
+      "expand-button-label": ">",
+      "collapse-button-label": "v",
+      "show-per-app": false
+    },
+    "backlight": {
+      "label": " Brightness"
+    },
+    "mpris": {
+      "show-album-art": "always",
+      "loop-carousel": true
+    }
+  }
+}

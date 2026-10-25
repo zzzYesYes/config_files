@@ -1,0 +1,106 @@
+/* Catppuccin Mocha — retro terminal style for swaync (matches waybar/rofi) */
+
+* {
+    font-family: "BigBlueTermPlus Nerd Font Propo", FontAwesome, sans-serif;
+    color: #cdd6f4; /* text */
+}
+
+.control-center {
+    background-color: #1e1e2e; /* base */
+    border: 2px solid #cba6f7; /* mauve */
+    border-radius: 0px;
+}
+
+.widget-title {
+    color: #cba6f7;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 8px;
+}
+
+.widget-title button {
+    background-color: #313244; /* surface0 */
+    border: 1px solid #585b70; /* surface2 */
+    border-radius: 0px;
+    color: #cdd6f4;
+}
+
+.widget-title button:hover {
+    background-color: #45475a; /* surface1 */
+}
+
+.widget-volume,
+.widget-backlight,
+.widget-mpris,
+.widget-notifications {
+    background-color: #181825; /* mantle */
+    border: 1px solid #585b70;
+    border-radius: 0px;
+    margin: 6px;
+    padding: 8px;
+}
+
+/* sliders */
+scale trough {
+    background-color: #313244; /* surface0 */
+    border-radius: 0px;
+    min-height: 8px;
+}
+
+scale highlight {
+    background-color: #cba6f7; /* mauve */
+    border-radius: 0px;
+}
+
+scale slider {
+    background-color: #cdd6f4;
+    border-radius: 0px;
+    min-height: 14px;
+    min-width: 14px;
+    box-shadow: none;
+}
+
+/* mpris player buttons */
+.widget-mpris button {
+    background-color: #313244;
+    border: 1px solid #585b70;
+    border-radius: 0px;
+    color: #cdd6f4;
+}
+
+.widget-mpris button:hover {
+    background-color: #45475a;
+}
+
+.widget-mpris .widget-mpris-title {
+    color: #cba6f7;
+}
+
+/* notifications */
+.notification {
+    background-color: #181825;
+    border: 1px solid #585b70;
+    border-radius: 0px;
+    margin: 4px;
+    padding: 8px;
+}
+
+.notification.critical {
+    border-color: #f38ba8; /* red */
+}
+
+.notification-default-action:hover,
+.notification:hover {
+    background-color: #313244;
+}
+
+.close-button {
+    background-color: #313244;
+    border-radius: 0px;
+    color: #cdd6f4;
+}
+
+.close-button:hover {
+    background-color: #f38ba8;
+    color: #1e1e2e;
+}

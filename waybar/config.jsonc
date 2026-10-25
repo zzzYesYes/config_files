@@ -18,7 +18,7 @@
         "hyprland/window"
     ],
     "modules-right": [
-        "group/control-center",
+        "custom/cc-icon",
         // "idle_inhibitor",
         "split",
         "network",
@@ -129,11 +129,6 @@
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", ""]
     },
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
-    },
     "battery": {
         "states": {
             // "good": 95,
@@ -183,25 +178,6 @@
         "on-click": "$HOME/.config/waybar/bt-menu.sh",
         "on-click-right": "$HOME/.config/hypr/scripts/toggle-bluetooth.sh"
     },
-    "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["\uf026", "\uf027", "\uf028"]
-        },
-        "on-click": "pavucontrol"
-    },
     "custom/media": {
         "format": "{icon} {text}",
         "return-type": "json",
@@ -229,16 +205,9 @@
     "split": {
         "format": "/"
     },
-    "group/control-center": {
-        "orientation": "horizontal",
-        "drawer": {
-            "transition-duration": 300,
-            "click-to-reveal": true
-        },
-        "modules": ["custom/cc-icon", "pulseaudio", "backlight", "mpd"]
-    },
     "custom/cc-icon": {
-        "format": "",
-        "tooltip-format": "Control center"
+        "format": "",
+        "tooltip-format": "Control center",
+        "on-click": "swaync-client -t"
     }
 }

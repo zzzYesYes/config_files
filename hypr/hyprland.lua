@@ -56,7 +56,7 @@ local chrome      = "google-chrome-stable"
 hl.on("hyprland.start", function () 
 --   hl.exec_cmd(terminal)
 --   hl.exec_cmd("nm-applet")
-   hl.exec_cmd("waybar & hyprpaper & fcitx5 -d & swayosd-server")
+   hl.exec_cmd("waybar & hyprpaper & fcitx5 -d & swayosd-server & swaync")
 end)
 
 
