@@ -127,10 +127,9 @@ separator_style = { fg = "#585b70" }
 # : Help {{{
 
 [help]
-on      = { fg = "#94e2d5" }
-run     = { fg = "#f5c2e7" }
+chord   = { fg = "#94e2d5" }
+action  = { fg = "#f5c2e7" }
 hovered = { reversed = true, bold = true }
-footer  = { fg = "#313244", bg = "#cdd6f4" }
 
 # : }}}
 
@@ -208,8 +207,8 @@ conds = [
 	{ if = "dummy", text = "", fg = "#f38ba8" },
 
 	# Fallback
-	{ if = "dir & hovered", text = "", fg = "#89b4fa" },
-	{ if = "dir", text = "", fg = "#89b4fa" },
+	{ if = "dir & hovered", text = "", fg = "#cba6f7" },
+	{ if = "dir", text = "", fg = "#cba6f7" },
 	{ if = "exec", text = "", fg = "#a6e3a1" },
 	{ if = "!dir", text = "", fg = "#cdd6f4" },
 ]
