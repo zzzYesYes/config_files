@@ -1,0 +1,4 @@
+[mgr]
+prepend_keymap = [
+  { on = "<Enter>", run = "plugin imv-order", desc = "Open images in yazi order with imv" },
+]
