@@ -1,0 +1,75 @@
+/* Catppuccin Mocha — retro terminal theme for rofi
+ * Square corners, reverse-video selection, phosphor-style accents. */
+
+* {
+    bg:         #1e1e2e;
+    bg-alt:     #181825;
+    fg:         #cdd6f4;
+    fg-dim:     #7f849c;
+    surface:    #313244;
+    border-col: #cba6f7;
+    accent:     #cba6f7;
+    green:      #a6e3a1;
+    select-bg:  #cdd6f4;
+    select-fg:  #1e1e2e;
+
+    font: "BigBlueTermPlus Nerd Font Propo 12";
+    background-color: transparent;
+    text-color: @fg;
+}
+
+window {
+    background-color: @bg;
+    border: 2px solid;
+    border-color: @border-col;
+    border-radius: 0px;
+    padding: 10px;
+    width: 480px;
+}
+
+mainbox {
+    background-color: @bg;
+    children: [ inputbar, listview ];
+    spacing: 8px;
+}
+
+inputbar {
+    background-color: @surface;
+    padding: 6px 8px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @accent;
+}
+
+entry {
+    text-color: @fg;
+    placeholder: "...";
+    placeholder-color: @fg-dim;
+    cursor: text;
+}
+
+listview {
+    background-color: @bg;
+    lines: 10;
+    spacing: 2px;
+    scrollbar: false;
+    fixed-height: false;
+}
+
+element {
+    padding: 3px 6px;
+    border-radius: 0px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+}
+
+element selected,
+element-text selected {
+    background-color: @select-bg;
+    text-color: @select-fg;
+}
