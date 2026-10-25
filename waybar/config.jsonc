@@ -208,6 +208,8 @@
     "custom/cc-icon": {
         "format": "",
         "tooltip-format": "Control center",
+        "exec": "echo ''",
+        "interval": "once",
         "on-click": "swaync-client -t"
     }
 }
