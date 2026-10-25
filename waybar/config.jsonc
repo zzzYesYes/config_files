@@ -23,6 +23,7 @@
         "pulseaudio",
         "split",
         "network",
+        "bluetooth",
         "power-profiles-daemon",
         // "cpu",
         // "memory",
@@ -172,6 +173,17 @@
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    "bluetooth": {
+        "format-on": "󰂯 on",
+        "format-off": "󰂲 off",
+        "format-disabled": "󰂲",
+        "format-connected": "󰂱 {num_connections}",
+        "tooltip-format": "Bluetooth: {status}",
+        "tooltip-format-connected": "Bluetooth: connected ({num_connections})\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "$HOME/.config/waybar/bt-menu.sh",
+        "on-click-right": "$HOME/.config/hypr/scripts/toggle-bluetooth.sh"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
