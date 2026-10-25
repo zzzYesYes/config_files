@@ -1,0 +1,25 @@
+/* Catppuccin Mocha — retro terminal style for swayosd (matches waybar/rofi) */
+
+window#osd {
+    background-color: rgba(30, 30, 46, 0.95); /* base */
+    border: 2px solid #cba6f7; /* mauve */
+    border-radius: 0px;
+    padding: 12px 20px;
+    font-family: "BigBlueTermPlus Nerd Font Propo", sans-serif;
+    color: #cdd6f4;
+}
+
+window#osd label,
+window#osd image {
+    color: #cdd6f4;
+}
+
+window#osd progressbar trough {
+    background-color: #313244; /* surface0 */
+    border-radius: 0px;
+}
+
+window#osd progressbar progress {
+    background-color: #cba6f7; /* mauve */
+    border-radius: 0px;
+}

@@ -4,7 +4,7 @@
     // "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
+    "spacing": 0, // Gaps between modules (0 = flush, like workspace tabs)
     // Choose the order of the modules
     "modules-left": [
         "sway/workspaces",
@@ -18,9 +18,8 @@
         "hyprland/window"
     ],
     "modules-right": [
-        "mpd",
+        "group/control-center",
         // "idle_inhibitor",
-        "pulseaudio",
         "split",
         "network",
         "bluetooth",
@@ -28,7 +27,6 @@
         // "cpu",
         // "memory",
         // "temperature",
-        "backlight",
         // "keyboard-state",
         // "sway/language",
         // "hyprland/language",
@@ -230,5 +228,17 @@
     },
     "split": {
         "format": "/"
+    },
+    "group/control-center": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 300,
+            "click-to-reveal": true
+        },
+        "modules": ["custom/cc-icon", "pulseaudio", "backlight", "mpd"]
+    },
+    "custom/cc-icon": {
+        "format": "",
+        "tooltip-format": "Control center"
     }
 }
