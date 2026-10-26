@@ -9,8 +9,11 @@ bar() { # $1 = signal 0-100
     printf '%s' "$out"
 }
 
-nmcli device wifi rescan 2>/dev/null
-sleep 1
+# cached list shows instantly; the Rescan row refreshes on demand
+if [ "$1" = "--rescan" ]; then
+    nmcli device wifi rescan 2>/dev/null
+    sleep 1
+fi
 
 menu=$(nmcli -t -f SSID,SIGNAL,SECURITY,IN-USE dev wifi list |
     grep -v '^:' | sort -t: -k2 -rn | awk -F: '!seen[$1]++' |
@@ -23,8 +26,15 @@ menu=$(nmcli -t -f SSID,SIGNAL,SECURITY,IN-USE dev wifi list |
 
 [ -z "$menu" ] && exit 0
 
+menu=">> Rescan...
+$menu"
+
 choice=$(printf '%s\n' "$menu" | rofi -dmenu -i -p "Wifi" -theme-str 'window { width: 560px; }')
 [ -z "$choice" ] && exit 0
+
+if printf '%s' "$choice" | grep -q '^>> Rescan'; then
+    exec "$0" --rescan
+fi
 
 ssid=$(printf '%s' "$choice" | sed 's/^[* ] *//' | sed 's/^\(.\{28\}\).*/\1/; s/ *$//')
 [ -z "$ssid" ] && exit 0
