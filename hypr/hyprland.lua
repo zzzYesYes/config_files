@@ -272,7 +272,7 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("/home/zzz/.config/rofi/palette.sh"))
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("/home/zzz/.config/rofi/palette.lua"))
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + SHIFT + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
@@ -299,13 +299,13 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Toggle touchpad
-hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggle-touchpad.sh"))
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggle-touchpad.lua"))
 
 -- Toggle bluetooth
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggle-bluetooth.sh"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggle-bluetooth.lua"))
 
 -- Bluetooth device menu (rofi)
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("/home/zzz/.config/waybar/bt-menu.sh"))
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("/home/zzz/.config/waybar/bt-menu.lua"))
 
 -- Toggle control center (ags)
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("ags toggle control-center"))
@@ -317,7 +317,7 @@ hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -t"))
 
 -- Wifi networks menu (rofi)
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("/home/zzz/.config/waybar/net-menu.sh"))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("/home/zzz/.config/waybar/net-menu.lua"))
 
 -- Laptop multimedia keys for volume and LCD brightness (swayosd OSD bar, wpctl fallback)
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise || wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })

@@ -159,7 +159,7 @@ function BluetoothSection() {
       <label class="bt-status" hexpand xalign={0} label={status} />
       <button
         class="cc-btn"
-        onClicked={() => execAsync("/home/zzz/.config/waybar/bt-menu.sh").catch(() => {})}
+        onClicked={() => execAsync("/home/zzz/.config/waybar/bt-menu.lua").catch(() => {})}
         tooltipText="Manage devices"
       >
         <label label="Devices" />
@@ -217,7 +217,7 @@ function NetworkSection() {
         class="cc-btn"
         onClicked={() => {
           if (w) w.scan()
-          execAsync("/home/zzz/.config/waybar/net-menu.sh").catch(() => {})
+          execAsync("/home/zzz/.config/waybar/net-menu.lua").catch(() => {})
         }}
         tooltipText="Available networks"
       >
@@ -233,7 +233,7 @@ const HAS_TOUCHPAD =
   ).trim() === "yes"
 
 function TouchpadSection() {
-  // state file written by toggle-touchpad.sh (exists = disabled)
+  // state file written by toggle-touchpad.lua (exists = disabled)
   const state = createPoll("on", 1000, 'bash -c "test -f $XDG_RUNTIME_DIR/toggle-touchpad.state && echo off || echo on"')
   const enabled = state((s) => s.trim() !== "off")
 
@@ -244,7 +244,7 @@ function TouchpadSection() {
       <button
         class={enabled((e) => (e ? "icon-btn" : "icon-btn off"))}
         onClicked={() =>
-          execAsync("/home/zzz/.config/hypr/scripts/toggle-touchpad.sh").catch(() => {})
+          execAsync("/home/zzz/.config/hypr/scripts/toggle-touchpad.lua").catch(() => {})
         }
         tooltipText="Toggle touchpad"
       >
