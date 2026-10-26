@@ -25,6 +25,11 @@ window#control-center {
   font-size: 16px;
 }
 
+.slider-row .row-icon,
+.slider-row .icon-btn {
+  min-width: 26px;
+}
+
 .icon-btn {
   background: none;
   border: none;

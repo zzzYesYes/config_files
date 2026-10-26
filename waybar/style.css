@@ -219,6 +219,11 @@ label:focus {
     min-width: 100px;
 }
 
+#custom-cc-icon.active {
+    background-color: #cba6f7; /* mauve, like focused workspace */
+    color: #1e1e2e;
+}
+
 #custom-media.custom-spotify {
     background-color: #a6e3a1;
 }

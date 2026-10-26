@@ -207,9 +207,9 @@
     },
     "custom/cc-icon": {
         "format": "{}",
-        "exec": "echo ''",
-        "interval": "once",
-        "tooltip-format": "Control center",
+        "return-type": "json",
+        "exec": "$HOME/.config/waybar/cc-state.sh",
+        "interval": 1,
         "on-click": "ags toggle control-center"
     }
 }

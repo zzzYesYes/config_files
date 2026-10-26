@@ -145,14 +145,27 @@ function MediaSection() {
   )
 }
 
+import GLib from "gi://GLib"
+
+const STATE_FILE = "/tmp/cc-visible"
+
+function syncState(visible: boolean) {
+  GLib.file_set_contents(STATE_FILE, visible ? "1" : "0")
+}
+
 export default function ControlCenter() {
   const wp = AstalWp.get_default()
   const speaker = wp!.defaultSpeaker
   const mic = wp!.defaultMicrophone
   const { TOP, RIGHT } = Astal.WindowAnchor
 
+  syncState(false)
+
   return (
     <window
+      $={(self) => {
+        self.connect("notify::visible", () => syncState(self.visible))
+      }}
       name="control-center"
       namespace="control-center"
       application={app}
@@ -160,8 +173,8 @@ export default function ControlCenter() {
       anchor={TOP | RIGHT}
       exclusivity={Astal.Exclusivity.NORMAL}
       layer={Astal.Layer.OVERLAY}
-      marginTop={36}
-      marginRight={6}
+      marginTop={30}
+      marginRight={2}
       keymode={Astal.Keymode.ON_DEMAND}
     >
       <Gtk.EventControllerKey
