@@ -16,6 +16,7 @@ const ICON_PLAY = ""
 const ICON_PAUSE = ""
 const ICON_NEXT = ""
 const ICON_MUSIC = ""
+const BRIGHT_ICONS = ["", "", "", "", "", "", "", "", ""]
 
 function VolumeSlider({ endpoint, icon }: { endpoint: AstalWp.Endpoint; icon: string }) {
   const volume = createBinding(endpoint, "volume")
@@ -50,7 +51,7 @@ function BrightnessSlider() {
 
   return (
     <box class="slider-row" spacing={8}>
-      <label class="row-icon" label={ICON_SUN} />
+      <label class="row-icon" label={screen((v) => BRIGHT_ICONS[Math.min(BRIGHT_ICONS.length - 1, Math.floor(v * BRIGHT_ICONS.length))])} />
       <slider
         class="vol-slider"
         hexpand
