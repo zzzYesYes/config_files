@@ -210,7 +210,6 @@
         "exec": "echo ''",
         "interval": "once",
         "tooltip-format": "Control center",
-        "on-click": "ags toggle control-center",
-        "on-click-right": "$HOME/.config/waybar/sound-menu.sh"
+        "on-click": "ags toggle control-center"
     }
 }

@@ -5,7 +5,7 @@ import Gdk from "gi://Gdk?version=4.0"
 import AstalWp from "gi://AstalWp"
 import AstalBrightness from "gi://AstalBrightness"
 import AstalMpris from "gi://AstalMpris"
-import { For, With, createBinding } from "ags"
+import { For, With, createBinding, createComputed } from "ags"
 
 const ICON_OUT = ""
 const ICON_MIC = ""
@@ -18,9 +18,14 @@ const ICON_NEXT = ""
 const ICON_MUSIC = ""
 const BRIGHT_ICONS = ["", "", "", "", "", "", "", "", ""]
 
-function VolumeSlider({ endpoint, icon }: { endpoint: AstalWp.Endpoint; icon: string }) {
+function VolumeSlider({ endpoint, icons, mutedIcon }: { endpoint: AstalWp.Endpoint; icons: string[]; mutedIcon: string }) {
   const volume = createBinding(endpoint, "volume")
   const muted = createBinding(endpoint, "mute")
+  const icon = createComputed(() =>
+    muted()
+      ? mutedIcon
+      : icons[Math.min(icons.length - 1, Math.floor(volume() * icons.length))],
+  )
 
   return (
     <box class="slider-row" spacing={8}>
@@ -29,7 +34,7 @@ function VolumeSlider({ endpoint, icon }: { endpoint: AstalWp.Endpoint; icon: st
         onClicked={() => endpoint.set_mute(!endpoint.mute)}
         tooltipText="Toggle mute"
       >
-        <label label={muted((m) => (m ? ICON_MUTED : icon))} />
+        <label label={icon} />
       </button>
       <slider
         class="vol-slider"
@@ -170,8 +175,8 @@ export default function ControlCenter() {
       />
       <box class="control-center" orientation={Gtk.Orientation.VERTICAL} spacing={10}>
         <label class="cc-title" label="Control Center" />
-        <VolumeSlider endpoint={speaker} icon={ICON_OUT} />
-        <VolumeSlider endpoint={mic} icon={ICON_MIC} />
+        <VolumeSlider endpoint={speaker} icons={["", "", ""]} mutedIcon={""} />
+        <VolumeSlider endpoint={mic} icons={[""]} mutedIcon={""} />
         <BrightnessSlider />
         <MediaSection />
       </box>

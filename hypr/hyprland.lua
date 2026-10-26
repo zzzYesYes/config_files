@@ -303,6 +303,9 @@ hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggl
 -- Toggle bluetooth
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggle-bluetooth.sh"))
 
+-- Toggle control center (ags)
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("ags toggle control-center"))
+
 -- Laptop multimedia keys for volume and LCD brightness (swayosd OSD bar, wpctl fallback)
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise || wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume lower || wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
