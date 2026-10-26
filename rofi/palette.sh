@@ -23,7 +23,7 @@ Switch workspace	SUPER+0-9
 Toggle touchpad	SUPER+T	
 Volume/brightness OSD	XF86 media keys	
 yazi: sort files	, then n/a/s/m/b/e/r (capital = reverse)	
-yazi: open image in imv (dir order)	Enter on image	
+yazi: open image in imv	Enter on image	
 yazi: open video in mpv	Enter on video	
 yazi: choose program	o	
 imv: prev/next image	Left/Right	
@@ -36,12 +36,12 @@ tmux: switch pane	M-h/j/k/l
 EOF
 )
 
-choice=$(printf '%s\n' "$entries" | awk -F'\t' '{printf "%-38s %s\n", $1, $2}' |
-    rofi -dmenu -i -p "Palette")
+choice=$(printf '%s\n' "$entries" | awk -F'\t' '{printf "%-34s %s\n", $1, $2}' |
+    rofi -dmenu -i -p "Palette" -theme-str 'window { width: 620px; }')
 
 [ -z "$choice" ] && exit 0
 
-desc=$(printf '%s' "$choice" | sed 's/^\(.\{38\}\).*/\1/; s/ *$//')
+desc=$(printf '%s' "$choice" | sed 's/^\(.\{34\}\).*/\1/; s/ *$//')
 cmd=$(printf '%s\n' "$entries" | awk -F'\t' -v d="$desc" '$1 == d {print $3}')
 
 [ -n "$cmd" ] && exec $cmd
