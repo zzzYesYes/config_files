@@ -170,10 +170,19 @@ function BluetoothSection() {
 function NetworkSection() {
   const network = AstalNetwork.get_default()
   const wifi = createBinding(network, "wifi")
+  const wired = createBinding(network, "wired")
+  const primary = createBinding(network, "primary")
 
-  const WIFI_ICON = ""
+  const WIFI_ICON = "WIFIICON"
+  const ETH_ICON = ""
+
+  const onWired = createComputed(() => {
+    const w = wired()
+    return primary() === AstalNetwork.Primary.WIRED && !!w
+  })
 
   const status = createComputed(() => {
+    if (onWired()) return "Ethernet"
     const w = wifi()
     if (!w || !w.enabled) return "Off"
     return w.ssid || "Disconnected"
@@ -189,7 +198,7 @@ function NetworkSection() {
         }}
         tooltipText="Toggle wifi"
       >
-        <label label={WIFI_ICON} />
+        <label label={onWired((w) => (w ? ETH_ICON : WIFI_ICON))} />
       </button>
       <label class="bt-status" hexpand xalign={0} label={status} />
       <button

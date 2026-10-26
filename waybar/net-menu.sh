@@ -26,14 +26,35 @@ menu=$(nmcli -t -f SSID,SIGNAL,SECURITY,IN-USE dev wifi list |
 
 [ -z "$menu" ] && exit 0
 
+eth=$(nmcli -t -f DEVICE,TYPE,STATE device status | awk -F: '$2 == "ethernet" {print $1 " (" $3 ")"}')
+
 menu=">> Rescan...
+>> Hidden network...
 $menu"
+[ -n "$eth" ] && menu="$menu
+-- ethernet --
+$eth"
 
 choice=$(printf '%s\n' "$menu" | rofi -dmenu -i -p "Wifi" -theme-str 'window { width: 560px; }')
 [ -z "$choice" ] && exit 0
 
 if printf '%s' "$choice" | grep -q '^>> Rescan'; then
     exec "$0" --rescan
+fi
+
+# ethernet rows and section header are informational only
+printf '%s' "$choice" | grep -qE '^-- |^enp|^eth|^eno' && exit 0
+
+if printf '%s' "$choice" | grep -q '^>> Hidden'; then
+    ssid=$(rofi -dmenu -p "Hidden SSID" -theme-str 'window { width: 420px; }')
+    [ -z "$ssid" ] && exit 0
+    pass=$(rofi -dmenu -password -p "Password (empty = open)" -theme-str 'window { width: 420px; }')
+    if [ -n "$pass" ]; then
+        nmcli device wifi connect "$ssid" password "$pass" hidden yes
+    else
+        nmcli device wifi connect "$ssid" hidden yes
+    fi
+    exit 0
 fi
 
 ssid=$(printf '%s' "$choice" | sed 's/^[* ] *//' | sed 's/^\(.\{28\}\).*/\1/; s/ *$//')
