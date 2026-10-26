@@ -9,7 +9,7 @@ STATE_FILE="${XDG_RUNTIME_DIR:-/tmp}/toggle-touchpad.state"
 
 notify() {
     # hyprctl notify <icon> <time_ms> <color> <message...>
-    hyprctl notify "$1" 1500 "rgb(33ccff)" "$2"
+    hyprctl notify "$1" 1500 "rgb(cba6f7)" "$2"
 }
 
 find_touchpad() {

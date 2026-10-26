@@ -97,6 +97,10 @@ slider slider {
   color: #585b70; /* dimmed when muted */
 }
 
+.icon-btn.off label {
+  color: #585b70; /* dimmed when off (bluetooth, touchpad) */
+}
+
 .cc-btn {
   background: none;
   border: none;
