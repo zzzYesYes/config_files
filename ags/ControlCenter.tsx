@@ -175,7 +175,7 @@ export default function ControlCenter() {
       anchor={TOP | RIGHT}
       exclusivity={Astal.Exclusivity.NORMAL}
       layer={Astal.Layer.OVERLAY}
-      marginTop={0}
+      marginTop={2}
       marginRight={2}
       keymode={Astal.Keymode.ON_DEMAND}
     >
