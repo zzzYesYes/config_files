@@ -10,29 +10,13 @@
   "timeout": 6,
   "widgets": [
     "title",
-    "volume",
-    "backlight",
-    "mpris",
     "notifications"
   ],
   "widget-config": {
     "title": {
-      "text": "Control Center",
+      "text": "Notifications",
       "clear-all-button": true,
-      "button-text": " Clear"
-    },
-    "volume": {
-      "label": " Output",
-      "expand-button-label": ">",
-      "collapse-button-label": "v",
-      "show-per-app": false
-    },
-    "backlight": {
-      "label": " Brightness"
-    },
-    "mpris": {
-      "show-album-art": "always",
-      "loop-carousel": true
+      "button-text": "Clear all"
     }
   }
 }
