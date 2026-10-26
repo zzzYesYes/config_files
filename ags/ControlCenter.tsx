@@ -6,6 +6,7 @@ import AstalWp from "gi://AstalWp"
 import AstalBrightness from "gi://AstalBrightness"
 import AstalMpris from "gi://AstalMpris"
 import AstalBluetooth from "gi://AstalBluetooth"
+import AstalNetwork from "gi://AstalNetwork"
 import { For, With, createBinding, createComputed } from "ags"
 import { execAsync } from "ags/process"
 
@@ -166,6 +167,46 @@ function BluetoothSection() {
   )
 }
 
+function NetworkSection() {
+  const network = AstalNetwork.get_default()
+  const wifi = createBinding(network, "wifi")
+
+  const WIFI_ICON = ""
+
+  const status = createComputed(() => {
+    const w = wifi()
+    if (!w || !w.enabled) return "Off"
+    return w.ssid || "Disconnected"
+  })
+
+  return (
+    <box class="slider-row net-row" spacing={8}>
+      <button
+        class={wifi((w) => (w && w.enabled ? "icon-btn net-toggle" : "icon-btn net-toggle off"))}
+        onClicked={() => {
+          const w = wifi()
+          if (w) w.enabled = !w.enabled
+        }}
+        tooltipText="Toggle wifi"
+      >
+        <label label={WIFI_ICON} />
+      </button>
+      <label class="bt-status" hexpand xalign={0} label={status} />
+      <button
+        class="cc-btn"
+        onClicked={() => {
+          const w = wifi()
+          if (w) w.scan()
+          execAsync("/home/zzz/.config/waybar/net-menu.sh").catch(() => {})
+        }}
+        tooltipText="Available networks"
+      >
+        <label label="Networks" />
+      </button>
+    </box>
+  )
+}
+
 function MediaSection() {
   const mpris = AstalMpris.get_default()
   const players = createBinding(mpris, "players")
@@ -234,6 +275,7 @@ export default function ControlCenter() {
         <VolumeSlider endpoint={mic} icons={[""]} mutedIcon={""} />
         <BrightnessSlider />
         <BluetoothSection />
+        <NetworkSection />
         <MediaSection />
       </box>
     </window>
