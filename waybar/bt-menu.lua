@@ -70,15 +70,15 @@ local paired = capture("bluetoothctl devices Paired 2>/dev/null")
 local all = capture("bluetoothctl devices 2>/dev/null")
 
 header(" Connected")
-device_rows(connected, "", "disconnect")
+device_rows(connected, utf8.char(0xf0c2), "disconnect")
 separator()
 header(" Paired")
-device_rows(set_difference(paired, connected), "", "connect")
+device_rows(set_difference(paired, connected), utf8.char(0xf294), "connect")
 separator()
 header(" New")
-device_rows(set_difference(all, paired), "", "pair")
+device_rows(set_difference(all, paired), utf8.char(0xf111), "pair")
 separator()
-addrow("<span foreground='#8aadf4'>    Scan for new devices</span>", "", "scan")
+addrow("<span foreground='#8aadf4'>" .. utf8.char(0xf021) .. "   Scan for new devices</span>", "", "scan")
 
 if os.getenv("BT_MENU_DEBUG") then
     for _, row in ipairs(rows) do print(row) end
