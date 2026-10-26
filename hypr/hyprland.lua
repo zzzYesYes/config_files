@@ -309,6 +309,9 @@ hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("/home/zzz/.config/waybar/bt-
 -- Toggle control center (ags)
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("ags toggle control-center"))
 
+-- Toggle notification center (swaync)
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -t"))
+
 -- Laptop multimedia keys for volume and LCD brightness (swayosd OSD bar, wpctl fallback)
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise || wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume lower || wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
