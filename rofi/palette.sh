@@ -125,7 +125,7 @@ if [ $# -eq 0 ]; then
     # launcher mode
     exec rofi -show Hyprland \
         -modi "Hyprland:/home/zzz/.config/rofi/palette.sh hyprland,Files:/home/zzz/.config/rofi/palette.sh files,tmux:/home/zzz/.config/rofi/palette.sh tmux,System:/home/zzz/.config/rofi/palette.sh system" \
-        -kb-mode-next "Control+Tab" -kb-mode-previous "Control+Shift+Tab" \
+        -kb-mode-next "Shift+Right,Control+Tab" -kb-mode-previous "Shift+Left,Control+ISO_Left_Tab" \
         -theme-str 'window { width: 620px; }'
 fi
 

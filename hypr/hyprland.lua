@@ -310,6 +310,9 @@ hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("/home/zzz/.config/waybar/bt-
 -- Toggle control center (ags)
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("ags toggle control-center"))
 
+-- Lock screen
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
+
 -- Toggle notification center (swaync)
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -t"))
 
