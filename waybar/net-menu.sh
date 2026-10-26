@@ -15,7 +15,7 @@ if [ "$1" = "--rescan" ]; then
     sleep 1
 fi
 
-menu=$(nmcli -t -f SSID,SIGNAL,SECURITY,IN-USE dev wifi list |
+menu=$(nmcli -t -f SSID,SIGNAL,SECURITY,IN-USE dev wifi list --rescan no |
     grep -v '^:' | sort -t: -k2 -rn | awk -F: '!seen[$1]++' |
     while IFS=: read -r ssid signal security inuse; do
         [ -z "$ssid" ] && continue
