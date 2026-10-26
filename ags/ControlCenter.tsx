@@ -5,7 +5,9 @@ import Gdk from "gi://Gdk?version=4.0"
 import AstalWp from "gi://AstalWp"
 import AstalBrightness from "gi://AstalBrightness"
 import AstalMpris from "gi://AstalMpris"
+import AstalBluetooth from "gi://AstalBluetooth"
 import { For, With, createBinding, createComputed } from "ags"
+import { execAsync } from "ags/process"
 
 const ICON_OUT = ""
 const ICON_MIC = ""
@@ -126,6 +128,42 @@ function Player({ player }: { player: AstalMpris.Player }) {
   )
 }
 
+function BluetoothSection() {
+  const bt = AstalBluetooth.get_default()
+  const powered = createBinding(bt, "isPowered")
+  const devices = createBinding(bt, "devices")
+  const adapter = createBinding(bt, "adapter")
+
+  const status = createComputed(() => {
+    if (!powered()) return "Off"
+    const conn = devices().filter((d) => d.connected)
+    return conn.length > 0 ? conn.map((d) => d.alias).join(", ") : "On"
+  })
+
+  return (
+    <box class="slider-row bt-row" spacing={8}>
+      <label class="row-icon" label={powered((p) => (p ? "" : ""))} />
+      <label class="bt-status" hexpand xalign={0} label={status} />
+      <button
+        class="cc-btn"
+        onClicked={() => {
+          const a = adapter()
+          if (a) a.powered = !a.powered
+        }}
+      >
+        <label label={powered((p) => (p ? "Turn off" : "Turn on"))} />
+      </button>
+      <button
+        class="cc-btn"
+        onClicked={() => execAsync("/home/zzz/.config/waybar/bt-menu.sh").catch(() => {})}
+        tooltipText="Manage devices"
+      >
+        <label label="Devices" />
+      </button>
+    </box>
+  )
+}
+
 function MediaSection() {
   const mpris = AstalMpris.get_default()
   const players = createBinding(mpris, "players")
@@ -193,6 +231,7 @@ export default function ControlCenter() {
         <VolumeSlider endpoint={speaker} icons={["", "", ""]} mutedIcon={""} />
         <VolumeSlider endpoint={mic} icons={[""]} mutedIcon={""} />
         <BrightnessSlider />
+        <BluetoothSection />
         <MediaSection />
       </box>
     </window>

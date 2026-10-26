@@ -79,3 +79,24 @@ slider slider {
 .dim {
   color: #7f849c;
 }
+
+.bt-row {
+  border-top: 1px solid #313244;
+  padding-top: 8px;
+}
+
+.bt-status {
+  color: #cdd6f4;
+}
+
+.cc-btn {
+  background-color: #313244;
+  border: 1px solid #585b70;
+  border-radius: 0;
+  color: #cdd6f4;
+  padding: 2px 10px;
+}
+
+.cc-btn:hover {
+  background-color: #45475a;
+}
