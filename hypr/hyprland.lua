@@ -316,6 +316,9 @@ hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
 -- Toggle notification center (swaync)
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -t"))
 
+-- Wifi networks menu (rofi)
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("/home/zzz/.config/waybar/net-menu.sh"))
+
 -- Laptop multimedia keys for volume and LCD brightness (swayosd OSD bar, wpctl fallback)
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise || wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume lower || wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })

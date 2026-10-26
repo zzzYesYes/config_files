@@ -169,46 +169,52 @@ function BluetoothSection() {
 
 function NetworkSection() {
   const network = AstalNetwork.get_default()
-  const wifi = createBinding(network, "wifi")
-  const wired = createBinding(network, "wired")
+  const w = network.wifi
+  const wired = network.wired
   const primary = createBinding(network, "primary")
+  const enabled = w ? createBinding(w, "enabled") : null
+  const strength = w ? createBinding(w, "strength") : null
+  const ssid = w ? createBinding(w, "ssid") : null
 
-  const onWired = createComputed(() => {
-    const w = wired()
-    return primary() === AstalNetwork.Primary.WIRED && !!w
-  })
+  // nf-md wifi strength levels + off + ethernet
+  const WIFI_LEVELS = ["󰤟", "󰤢", "󰤥", "󰤨"]
+  const WIFI_OFF = "󰤭"
+  const ETH_ICON = "󰈀"
 
-  const iconName = createComputed(() => {
-    if (onWired()) return wired()?.iconName ?? "network-wired-symbolic"
-    const w = wifi()
-    if (!w || !w.enabled) return "network-wireless-disabled-symbolic"
-    return w.iconName
+  const onWired = createComputed(
+    () => primary() === AstalNetwork.Primary.WIRED && !!wired,
+  )
+
+  const icon = createComputed(() => {
+    if (onWired()) return ETH_ICON
+    if (!enabled || !enabled()) return WIFI_OFF
+    const s = strength ? strength() : 0
+    return WIFI_LEVELS[Math.min(3, Math.floor(s / 25))]
   })
 
   const status = createComputed(() => {
     if (onWired()) return "Ethernet"
-    const w = wifi()
-    if (!w || !w.enabled) return "Off"
-    return w.ssid || "Disconnected"
+    if (!enabled || !enabled()) return "Off"
+    return (ssid && ssid()) || "Disconnected"
   })
 
   return (
     <box class="slider-row net-row" spacing={8}>
       <button
-        class={wifi((w) => (w && w.enabled ? "icon-btn net-toggle" : "icon-btn net-toggle off"))}
+        class={(enabled || createComputed(() => false))((e) =>
+          e ? "icon-btn net-toggle" : "icon-btn net-toggle off",
+        )}
         onClicked={() => {
-          const w = wifi()
           if (w) w.enabled = !w.enabled
         }}
         tooltipText="Toggle wifi"
       >
-        <image pixelSize={16} iconName={iconName} />
+        <label label={icon} />
       </button>
       <label class="bt-status" hexpand xalign={0} label={status} />
       <button
         class="cc-btn"
         onClicked={() => {
-          const w = wifi()
           if (w) w.scan()
           execAsync("/home/zzz/.config/waybar/net-menu.sh").catch(() => {})
         }}
