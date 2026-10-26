@@ -102,7 +102,7 @@ tmux: reload config	prefix + r
 EOF
             ;;
         system) cat <<'EOF'
-Lock screen		hyprlock
+Lock screen	SUPER+SHIFT+L	hyprlock
 Logout menu	SUPER+SHIFT+D	wlogout
 Suspend	via logout menu	
 Hibernate	via logout menu	
