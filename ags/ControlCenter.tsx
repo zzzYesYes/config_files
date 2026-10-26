@@ -146,11 +146,13 @@ function MediaSection() {
 }
 
 import GLib from "gi://GLib"
+import { execAsync } from "ags/process"
 
 const STATE_FILE = "/tmp/cc-visible"
 
 function syncState(visible: boolean) {
   GLib.file_set_contents(STATE_FILE, visible ? "1" : "0")
+  execAsync("pkill -RTMIN+8 waybar").catch(() => {})
 }
 
 export default function ControlCenter() {
@@ -173,7 +175,7 @@ export default function ControlCenter() {
       anchor={TOP | RIGHT}
       exclusivity={Astal.Exclusivity.NORMAL}
       layer={Astal.Layer.OVERLAY}
-      marginTop={30}
+      marginTop={0}
       marginRight={2}
       keymode={Astal.Keymode.ON_DEMAND}
     >
