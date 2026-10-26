@@ -313,6 +313,10 @@ hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("ags toggle control-center"))
 -- Lock screen
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
 
+-- Lock on lid close (logind suspends, so lock before it; lid-open bind is a safety net)
+hl.bind("switch:on:Lid Switch",  hl.dsp.exec_cmd("pgrep -x hyprlock >/dev/null || hyprlock"), { locked = true })
+hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("pgrep -x hyprlock >/dev/null || hyprlock"), { locked = true })
+
 -- Toggle notification center (swaync)
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -t"))
 
