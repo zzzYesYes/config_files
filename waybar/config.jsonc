@@ -206,11 +206,11 @@
         "format": "/"
     },
     "custom/cc-icon": {
-        "format": "",
-        "tooltip-format": "Control center",
-        "exec": "echo ''",
+        "format": "{}",
+        "exec": "echo ''",
         "interval": "once",
-        "on-click": "swaync-client -t",
+        "tooltip-format": "Control center",
+        "on-click": "ags toggle control-center",
         "on-click-right": "$HOME/.config/waybar/sound-menu.sh"
     }
 }
