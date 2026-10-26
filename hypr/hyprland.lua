@@ -303,6 +303,9 @@ hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggl
 -- Toggle bluetooth
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggle-bluetooth.sh"))
 
+-- Bluetooth device menu (rofi)
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("/home/zzz/.config/waybar/bt-menu.sh"))
+
 -- Toggle control center (ags)
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("ags toggle control-center"))
 

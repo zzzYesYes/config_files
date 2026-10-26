@@ -32,7 +32,7 @@ function VolumeSlider({ endpoint, icons, mutedIcon }: { endpoint: AstalWp.Endpoi
   return (
     <box class="slider-row" spacing={8}>
       <button
-        class="icon-btn"
+        class={muted((m) => (m ? "icon-btn muted" : "icon-btn"))}
         onClicked={() => endpoint.set_mute(!endpoint.mute)}
         tooltipText="Toggle mute"
       >
@@ -140,19 +140,21 @@ function BluetoothSection() {
     return conn.length > 0 ? conn.map((d) => d.alias).join(", ") : "On"
   })
 
+  const BT_ICON = ""
+
   return (
     <box class="slider-row bt-row" spacing={8}>
-      <label class="row-icon" label={powered((p) => (p ? "" : ""))} />
-      <label class="bt-status" hexpand xalign={0} label={status} />
       <button
-        class="cc-btn"
+        class={powered((p) => (p ? "icon-btn bt-toggle" : "icon-btn bt-toggle off"))}
         onClicked={() => {
           const a = adapter()
           if (a) a.powered = !a.powered
         }}
+        tooltipText="Toggle bluetooth"
       >
-        <label label={powered((p) => (p ? "Turn off" : "Turn on"))} />
+        <label label={BT_ICON} />
       </button>
+      <label class="bt-status" hexpand xalign={0} label={status} />
       <button
         class="cc-btn"
         onClicked={() => execAsync("/home/zzz/.config/waybar/bt-menu.sh").catch(() => {})}
