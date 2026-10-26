@@ -3,7 +3,8 @@
 # Sections: actions / wifi networks / ethernet (informational).
 
 bar_markup() { # $1 = signal 0-100 -> colored bar (mauve filled, dim empty)
-    local pct=$1 filled=$((pct / 10)) i f="" e=""
+    local pct=$1
+    local filled=$((pct / 10)) i f="" e=""
     for ((i = 0; i < filled; i++)); do f+="█"; done
     for ((i = filled; i < 10; i++)); do e+="░"; done
     printf "<span font_family='3270 Nerd Font' foreground='#cba6f7'>%s</span><span font_family='3270 Nerd Font' foreground='#45475a'>%s</span>" "$f" "$e"
