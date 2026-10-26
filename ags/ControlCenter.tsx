@@ -8,7 +8,7 @@ import AstalMpris from "gi://AstalMpris"
 import AstalBluetooth from "gi://AstalBluetooth"
 import AstalNetwork from "gi://AstalNetwork"
 import { For, With, createBinding, createComputed } from "ags"
-import { execAsync } from "ags/process"
+import { exec, execAsync } from "ags/process"
 import { createPoll } from "ags/time"
 
 const ICON_OUT = ""
@@ -227,6 +227,11 @@ function NetworkSection() {
   )
 }
 
+const HAS_TOUCHPAD =
+  exec(
+    "bash -c \"hyprctl devices | grep -qiE 'synaptics|elan|touchpad|ps/2' && echo yes || echo no\"",
+  ).trim() === "yes"
+
 function TouchpadSection() {
   // state file written by toggle-touchpad.sh (exists = disabled)
   const state = createPoll("on", 1000, 'bash -c "test -f $XDG_RUNTIME_DIR/toggle-touchpad.state && echo off || echo on"')
@@ -275,7 +280,7 @@ function MediaSection() {
 }
 
 import GLib from "gi://GLib"
-import { execAsync } from "ags/process"
+import { exec, execAsync } from "ags/process"
 import { createPoll } from "ags/time"
 
 const STATE_FILE = "/tmp/cc-visible"
@@ -325,7 +330,7 @@ export default function ControlCenter() {
         <BrightnessSlider />
         <BluetoothSection />
         <NetworkSection />
-        <TouchpadSection />
+        {HAS_TOUCHPAD && <TouchpadSection />}
         <MediaSection />
       </box>
     </window>

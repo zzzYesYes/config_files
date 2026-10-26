@@ -21,7 +21,7 @@
         "custom/cc-icon",
         // "idle_inhibitor",
         "split",
-        "network",
+        // "network",
         "power-profiles-daemon",
         // "cpu",
         // "memory",
