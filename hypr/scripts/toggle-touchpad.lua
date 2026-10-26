@@ -9,7 +9,7 @@ local STATE_FILE = (os.getenv("XDG_RUNTIME_DIR") or "/tmp") .. "/toggle-touchpad
 
 local function notify(icon, msg)
     -- hyprctl notify <icon> <time_ms> <color> <message>
-    os.execute(string.format("hyprctl notify %d 1500 'rgb(cba6f7)' '%s'", icon, msg))
+    os.execute(string.format("hyprctl notify %d 1500 'rgb(cba6f7)' '%s' > /dev/null 2>&1", icon, msg))
 end
 
 local function find_touchpad()
@@ -40,13 +40,13 @@ end
 local state = io.open(STATE_FILE, "r")
 if state then
     state:close()
-    if not os.execute(string.format('hyprctl eval "hl.device({ name = \\"%s\\", enabled = true })"', device)) then
+    if not os.execute(string.format('hyprctl eval "hl.device({ name = \\"%s\\", enabled = true })" > /dev/null 2>&1', device)) then
         os.exit(1)
     end
     os.remove(STATE_FILE)
     notify(5, "Touchpad enabled")
 else
-    if not os.execute(string.format('hyprctl eval "hl.device({ name = \\"%s\\", enabled = false })"', device)) then
+    if not os.execute(string.format('hyprctl eval "hl.device({ name = \\"%s\\", enabled = false })" > /dev/null 2>&1', device)) then
         os.exit(1)
     end
     local f = assert(io.open(STATE_FILE, "w"))
