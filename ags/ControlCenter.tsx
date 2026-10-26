@@ -173,12 +173,16 @@ function NetworkSection() {
   const wired = createBinding(network, "wired")
   const primary = createBinding(network, "primary")
 
-  const WIFI_ICON = "WIFIICON"
-  const ETH_ICON = ""
-
   const onWired = createComputed(() => {
     const w = wired()
     return primary() === AstalNetwork.Primary.WIRED && !!w
+  })
+
+  const iconName = createComputed(() => {
+    if (onWired()) return wired()?.iconName ?? "network-wired-symbolic"
+    const w = wifi()
+    if (!w || !w.enabled) return "network-wireless-disabled-symbolic"
+    return w.iconName
   })
 
   const status = createComputed(() => {
@@ -198,7 +202,7 @@ function NetworkSection() {
         }}
         tooltipText="Toggle wifi"
       >
-        <label label={onWired((w) => (w ? ETH_ICON : WIFI_ICON))} />
+        <image pixelSize={16} iconName={iconName} />
       </button>
       <label class="bt-status" hexpand xalign={0} label={status} />
       <button
