@@ -176,19 +176,26 @@ function NetworkSection() {
   const enabled = w ? createBinding(w, "enabled") : null
   const strength = w ? createBinding(w, "strength") : null
   const ssid = w ? createBinding(w, "ssid") : null
+  const internet = w ? createBinding(w, "internet") : null
 
   // nf-md wifi strength levels + off + ethernet
   const WIFI_LEVELS = ["󰤟", "󰤢", "󰤥", "󰤨"]
   const WIFI_OFF = "󰤭"
+  const WIFI_ALERT = "\u{F92E}"
   const ETH_ICON = "󰈀"
 
   const onWired = createComputed(
     () => primary() === AstalNetwork.Primary.WIRED && !!wired,
   )
 
+  const wifiConnected = createComputed(
+    () => !!internet && internet() === AstalNetwork.Internet.CONNECTED,
+  )
+
   const icon = createComputed(() => {
     if (onWired()) return ETH_ICON
     if (!enabled || !enabled()) return WIFI_OFF
+    if (!wifiConnected()) return WIFI_ALERT
     const s = strength ? strength() : 0
     return WIFI_LEVELS[Math.min(3, Math.floor(s / 25))]
   })
@@ -196,7 +203,11 @@ function NetworkSection() {
   const status = createComputed(() => {
     if (onWired()) return "Ethernet"
     if (!enabled || !enabled()) return "Off"
-    return (ssid && ssid()) || "Disconnected"
+    if (!wifiConnected())
+      return internet && internet() === AstalNetwork.Internet.CONNECTING
+        ? "Connecting…"
+        : "Disconnected"
+    return (ssid && ssid()) || "Connected"
   })
 
   return (
