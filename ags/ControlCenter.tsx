@@ -178,11 +178,11 @@ function NetworkSection() {
   const ssid = w ? createBinding(w, "ssid") : null
   const internet = w ? createBinding(w, "internet") : null
 
-  // nf-md wifi strength levels + off + ethernet
-  const WIFI_LEVELS = ["󰤟", "󰤢", "󰤥", "󰤨"]
-  const WIFI_OFF = "󰤭"
-  const WIFI_ALERT = "\u{F92E}"
-  const ETH_ICON = "󰈀"
+  // nf-md glyphs verified present in BigBlueTermPlus Nerd Font;
+  // the F91F-F92E strength/off-range is missing from local fonts and falls back to CJK ideographs
+  const WIFI_ICON = "\u{F05A9}"
+  const WIFI_OFF = "\u{F05AA}"
+  const ETH_ICON = "\u{F0200}"
 
   const onWired = createComputed(
     () => primary() === AstalNetwork.Primary.WIRED && !!wired,
@@ -195,9 +195,8 @@ function NetworkSection() {
   const icon = createComputed(() => {
     if (onWired()) return ETH_ICON
     if (!enabled || !enabled()) return WIFI_OFF
-    if (!wifiConnected()) return WIFI_ALERT
-    const s = strength ? strength() : 0
-    return WIFI_LEVELS[Math.min(3, Math.floor(s / 25))]
+    if (!wifiConnected()) return WIFI_OFF
+    return WIFI_ICON
   })
 
   const status = createComputed(() => {
@@ -207,14 +206,18 @@ function NetworkSection() {
       return internet && internet() === AstalNetwork.Internet.CONNECTING
         ? "Connecting…"
         : "Disconnected"
-    return (ssid && ssid()) || "Connected"
+    const name = (ssid && ssid()) || "Connected"
+    const s = strength ? strength() : 0
+    return `${name} ${s}%`
   })
 
   return (
     <box class="slider-row net-row" spacing={8}>
       <button
-        class={(enabled || createComputed(() => false))((e) =>
-          e ? "icon-btn net-toggle" : "icon-btn net-toggle off",
+        class={createComputed(() =>
+          enabled && enabled() && wifiConnected()
+            ? "icon-btn net-toggle"
+            : "icon-btn net-toggle off",
         )}
         onClicked={() => {
           if (w) w.enabled = !w.enabled
