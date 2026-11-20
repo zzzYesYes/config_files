@@ -5,7 +5,7 @@
     "mode": "dark"
   },
   "tabs": {
-    "mode": "off",
+    "mode": "on",
     "layout": "vertical",
     "indicators": "numbers",
     "scope": "global"
@@ -18,7 +18,7 @@
     "devtools": false
   },
   "session": {
-    "sidebar": "auto",
+    "sidebar": "hide",
     "verbosity": "low",
     "grouping": "auto",
     "new_location": "inherit"
@@ -29,6 +29,7 @@
   "keybinds": {
     "session.list": "<leader>s",
     "opencode.status": "none",
-    "zzz.tabs.toggle": "<leader>l"
+    "zzz.tabs.toggle": "<leader>l",
+    "session.interrupt": "<leader>k"
   }
 }
