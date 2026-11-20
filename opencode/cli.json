@@ -1,7 +1,34 @@
 {
   "$schema": "https://opencode.ai/v2/cli.json",
   "theme": {
-    "name": "catppuccin-mocha",
+    "name": "catppuccin",
     "mode": "dark"
+  },
+  "tabs": {
+    "mode": "off",
+    "layout": "vertical",
+    "indicators": "numbers",
+    "scope": "global"
+  },
+  "terminal": {
+    "title": true,
+    "copy": "manual"
+  },
+  "debug": {
+    "devtools": false
+  },
+  "session": {
+    "sidebar": "auto",
+    "verbosity": "low",
+    "grouping": "auto",
+    "new_location": "inherit"
+  },
+  "plugins": [
+    "file:///Users/zzz/config_files/opencode/plugins/tab-toggle"
+  ],
+  "keybinds": {
+    "session.list": "<leader>s",
+    "opencode.status": "none",
+    "zzz.tabs.toggle": "<leader>l"
   }
 }

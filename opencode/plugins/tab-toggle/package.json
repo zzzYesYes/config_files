@@ -1,0 +1,12 @@
+{
+  "name": "opencode-local-tab-toggle",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tui": "./tui.js"
+  },
+  "scripts": {
+    "test": "node --test tabs.test.js"
+  }
+}
