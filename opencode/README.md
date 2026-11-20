@@ -3,9 +3,18 @@
 ## Files
 
 - `cli.json`: terminal settings, symlinked from `~/.config/opencode/cli.json`.
-- `opencode.jsonc`: permission rules and the existing Pilot plugin, also symlinked globally.
+- `opencode.jsonc`: skill sources, permission rules, and the Pilot plugin; symlinked globally.
 - `plugins/tab-toggle/`: a local TUI-only plugin for vertical session tabs.
 - The provider-managed `~/.config/opencode/opencode.json` remains outside this repository.
+
+## Shared skills and CLI tools
+
+[Skill sharing](skill-sharing.md) documents the additive Codex migration, precedence decisions,
+fresh standalone verification, and diagram export checks. Existing `a1` and DWS skills are shared
+through `~/.agents/skills`; `draw-io` is shared from the additional `~/.codex/skills` source.
+
+[CLI authentication](cli-auth.md) records the successful existing login checks. CLI binaries and
+credentials are reused, not copied into OpenCode configuration. Codex remains intact.
 
 ## Shortcuts
 
