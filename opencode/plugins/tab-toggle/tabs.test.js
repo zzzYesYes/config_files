@@ -1,5 +1,5 @@
 import assert from "node:assert/strict"
-import { mkdtemp, readFile, readdir, rm, stat, symlink, lstat, writeFile } from "node:fs/promises"
+import { mkdtemp, readFile, readdir, rm, stat, symlink, lstat, lutimes, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 import test from "node:test"
@@ -55,8 +55,12 @@ test("updates the target without replacing its symlink", async (t) => {
   const f = await fixture(t, { tabs: { mode: "off" } })
   const link = join(f.directory, "cli-link.json")
   await symlink(f.path, link)
+  const oldTime = new Date("2000-01-01T00:00:00Z")
+  await lutimes(link, oldTime, oldTime)
   assert.equal(await toggleTabs(link, false), "on")
-  assert.equal((await lstat(link)).isSymbolicLink(), true)
+  const metadata = await lstat(link)
+  assert.equal(metadata.isSymbolicLink(), true)
+  assert.ok(metadata.mtimeMs > oldTime.getTime(), "Notify the CLI's symlink-directory watcher")
   assert.equal((await f.read()).tabs.mode, "on")
 })
 

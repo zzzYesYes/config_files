@@ -1,6 +1,7 @@
-"""Exercise the real TUI in an isolated tmux server and temporary CLI config."""
+"""Check rendered tab visibility with an isolated database and symlinked CLI config."""
 
 import json
+import os
 from pathlib import Path
 import shlex
 import subprocess
@@ -12,8 +13,12 @@ ROOT = Path(tempfile.mkdtemp(prefix="opencode-tab-toggle-tui-"))
 CONFIG = ROOT / "opencode" / "cli.json"
 CONFIG.parent.mkdir()
 TARGET = ROOT / "tracked-cli.json"
-TARGET.write_text(Path(__file__).resolve().parents[2].joinpath("cli.json").read_text())
+settings = json.loads(Path(__file__).resolve().parents[2].joinpath("cli.json").read_text())
+settings["tabs"]["mode"] = "off"
+TARGET.write_text(json.dumps(settings, indent=2))
 CONFIG.symlink_to(TARGET)
+DATABASE = ROOT / "test.db"
+TITLE = "TAB_FIXTURE"
 SOCKET = "opencode-tabs-" + uuid.uuid4().hex[:10]
 PREFIX = ["rtk", "tmux", "-L", SOCKET]
 
@@ -35,7 +40,7 @@ def wait_for(predicate, description, timeout=25):
         if value:
             return value
         time.sleep(0.15)
-    # Keep failure evidence local; review and redact it before sharing.
+    # Only synthetic fixture data is displayed; still review screenshots before sharing.
     (ROOT / "last-screen.txt").write_text(screen())
     raise AssertionError(f"{description}; local screenshot: {ROOT}")
 
@@ -45,24 +50,39 @@ def mode():
 
 
 try:
-    initial_mode = mode()
+    env = {**os.environ, "XDG_CONFIG_HOME": str(ROOT), "OPENCODE_DB": str(DATABASE)}
+    env.pop("OPENCODE_CLI_CONFIG_CONTENT", None)
+    fixture = subprocess.run(
+        ["rtk", "opencode", "api", "--standalone", "post", "/api/session",
+         "--data", json.dumps({"title": TITLE})],
+        cwd=ROOT, env=env, capture_output=True, text=True, check=True,
+    )
+    session_id = json.loads(fixture.stdout)["data"]["id"]
     command = (
         "rtk env XDG_CONFIG_HOME=" + shlex.quote(str(ROOT)) +
-        " OPENCODE_CLI_CONFIG_CONTENT= rtk opencode --standalone"
+        " OPENCODE_DB=" + shlex.quote(str(DATABASE)) +
+        " OPENCODE_CLI_CONFIG_CONTENT= rtk opencode --standalone --session " +
+        shlex.quote(session_id) + " " + shlex.quote(str(ROOT))
     )
     tmux("-f", "/dev/null", "new-session", "-d", "-s", "test", "-x", "160", "-y", "48", command)
-    wait_for(lambda: "ctrl+p commands" in screen() or "Ask anything" in screen(), "TUI startup")
+    wait_for(lambda: TITLE in screen(), "Fixture session startup")
+    baseline = screen().count(TITLE)
+    print(f"BASELINE_RENDERED_TITLE_COUNT {baseline}")
     tmux("send-keys", "-t", "test:0.0", "C-p")
     tmux("send-keys", "-t", "test:0.0", "-l", "Toggle left session tabs")
     wait_for(lambda: screen().count("Toggle left session tabs") >= 2, "Command registration")
     print("PLUGIN_COMMAND_REGISTERED true")
     tmux("send-keys", "-t", "test:0.0", "Escape")
-    for next_mode in (["off", "on"] if initial_mode == "on" else ["on", "off"]):
+    for next_mode in ["on", "off"]:
         tmux("send-keys", "-t", "test:0.0", "C-x", "l")
         wait_for(lambda: mode() == next_mode, f"Leader+L did not set tabs.mode={next_mode}")
         label = "shown" if next_mode == "on" else "hidden"
         wait_for(lambda: f"Left session tabs {label}" in screen(), "Success toast missing")
-        print(f"LEADER_L tabs.mode={next_mode}; success toast visible")
+        if next_mode == "on":
+            wait_for(lambda: screen().count(TITLE) > baseline, "Left tab panel did not render")
+        else:
+            wait_for(lambda: screen().count(TITLE) == baseline, "Left tab panel did not disappear")
+        print(f"LEADER_L tabs.mode={next_mode}; rendered title count={screen().count(TITLE)}")
     assert CONFIG.is_symlink(), "Toggle replaced the CLI config symlink"
     print("CLI_SYMLINK_PRESERVED true")
     tmux("send-keys", "-t", "test:0.0", "C-x", "s")
@@ -71,7 +91,7 @@ try:
         "Leader+S did not open session list",
     )
     print("LEADER_S session list visible")
-    print("USER_CONFIG_UNCHANGED true (isolated XDG_CONFIG_HOME)")
+    print("USER_CONFIG_AND_DATABASE_UNCHANGED true (isolated test fixtures)")
 finally:
     tmux("send-keys", "-t", "test:0.0", "Escape", "C-c", check=False)
     tmux("kill-server", check=False)

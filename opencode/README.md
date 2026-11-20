@@ -20,6 +20,9 @@ Restart the TUI once after installing the local plugin. Valid CLI settings chang
 
 The tab toggle changes `tabs.mode` between `on` and `off` and keeps `tabs.layout` vertical.
 It preserves unrelated settings and writes through the canonical path without replacing the symlink.
+It also updates the symlink's timestamps so OpenCode's config-directory watcher reloads
+its settings.
+See [the reload investigation](tab-toggle-reload.md) for the regression and its verification.
 Visibility is saved in the tracked `cli.json`, so toggling may leave this repository modified.
 Explicit inline tab overrides in `OPENCODE_CLI_CONFIG_CONTENT` must be removed before toggling.
 
@@ -28,10 +31,12 @@ Explicit inline tab overrides in `OPENCODE_CLI_CONFIG_CONTENT` must be removed b
 Executed on 2026-11-20 with OpenCode 2.1.3:
 
 - All eight Node unit tests passed, including mode transitions, legacy settings, invalid JSON,
-  unrelated-setting preservation, file permissions, and symlink preservation.
-- An isolated tmux TUI registered the command, accepted Leader+L in both directions, displayed
-  success toasts, preserved the config symlink, and opened the session list with Leader+S.
-- The TUI test used a temporary `XDG_CONFIG_HOME`; it did not toggle the user's live CLI config.
+  unrelated-setting preservation, file permissions, symlink preservation, and reload notification.
+- The corrected TUI test checks the rendered panel, not just config changes or success toasts.
+  The synthetic session title count changed from 1 to 2 when shown, then returned to 1 when hidden.
+- Leader+S still opened the session list, and the config symlink remained intact.
+- The test used a temporary `XDG_CONFIG_HOME` and an isolated database containing one empty fixture
+  session. It did not toggle the user's live config, modify their database, or send a model prompt.
 
 Reproduce from this repository's root:
 

@@ -1,4 +1,4 @@
-import { readFile, realpath, rename, stat, unlink, writeFile } from "node:fs/promises"
+import { lstat, lutimes, readFile, realpath, rename, stat, unlink, writeFile } from "node:fs/promises"
 import { randomUUID } from "node:crypto"
 
 // Write through the canonical path so atomic replacement never removes a dotfile symlink.
@@ -19,6 +19,12 @@ export async function toggleTabs(configPath, currentlyEnabled) {
       mode: metadata.mode & 0o777,
     })
     await rename(temporary, target)
+    // OpenCode 2.1.3 watches the config path's parent, not a symlink target's parent.
+    // Notify that watcher without replacing the link or creating another config file.
+    if ((await lstat(configPath)).isSymbolicLink()) {
+      const now = new Date()
+      await lutimes(configPath, now, now)
+    }
   } finally {
     await unlink(temporary).catch((error) => {
       if (error.code !== "ENOENT") throw error
