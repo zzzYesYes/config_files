@@ -4,7 +4,7 @@
     // "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
+    "spacing": 0, // Gaps between modules (0 = flush, like workspace tabs)
     // Choose the order of the modules
     "modules-left": [
         "sway/workspaces",
@@ -18,16 +18,14 @@
         "hyprland/window"
     ],
     "modules-right": [
-        "mpd",
+        "custom/cc-icon",
         // "idle_inhibitor",
-        "pulseaudio",
         "split",
-        "network",
+        // "network",
         "power-profiles-daemon",
         // "cpu",
         // "memory",
         // "temperature",
-        "backlight",
         // "keyboard-state",
         // "sway/language",
         // "hyprland/language",
@@ -130,11 +128,6 @@
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", ""]
     },
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
-    },
     "battery": {
         "states": {
             // "good": 95,
@@ -173,25 +166,6 @@
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
-    "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["\uf026", "\uf027", "\uf028"]
-        },
-        "on-click": "pavucontrol"
-    },
     "custom/media": {
         "format": "{icon} {text}",
         "return-type": "json",
@@ -218,5 +192,13 @@
     },
     "split": {
         "format": "/"
+    },
+    "custom/cc-icon": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "$HOME/.config/waybar/cc-state.lua",
+        "interval": "once",
+        "signal": 8,
+        "on-click": "ags toggle control-center"
     }
 }

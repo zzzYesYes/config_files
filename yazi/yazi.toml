@@ -1,0 +1,13 @@
+[opener]
+imv = [
+  { run = 'imv-dir %s', orphan = true, desc = "View with imv", for = "unix" },
+]
+mpv = [
+  { run = 'mpv %s', orphan = true, desc = "Play with mpv", for = "unix" },
+]
+
+[open]
+rules = [
+  { mime = "image/*", use = "imv" },
+  { mime = "video/*", use = "mpv" },
+]

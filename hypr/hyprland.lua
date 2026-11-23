@@ -41,6 +41,7 @@ local fileManager = "alacritty -e yazi"
 local menu        = "rofi -show drun"
 local firefox     = "firefox"
 local wlogout     = "wlogout"
+local chrome      = "google-chrome-stable"
 
 
 -------------------
@@ -55,7 +56,7 @@ local wlogout     = "wlogout"
 hl.on("hyprland.start", function () 
 --   hl.exec_cmd(terminal)
 --   hl.exec_cmd("nm-applet")
-   hl.exec_cmd("waybar & hyprpaper & fcitx5 -d")
+   hl.exec_cmd("waybar & hyprpaper & fcitx5 -d & swayosd-server & swaync & ags run")
 end)
 
 
@@ -101,8 +102,8 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border   = { colors = {"rgba(cba6f7ee)", "rgba(89b4faee)"}, angle = 45 },
+            inactive_border = "rgba(585b70aa)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -271,10 +272,12 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("/home/zzz/.config/rofi/palette.lua"))
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + SHIFT + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(firefox))
+hl.bind(mainMod .. " + SHIFT + G", hl.dsp.exec_cmd(chrome))
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd(wlogout))
 
 -- Move focus with mainMod + arrow keys
@@ -295,13 +298,40 @@ end
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
--- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
+-- Toggle touchpad
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggle-touchpad.lua"))
+
+-- Toggle bluetooth
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("/home/zzz/.config/hypr/scripts/toggle-bluetooth.lua"))
+
+-- Bluetooth device menu (rofi)
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("/home/zzz/.config/waybar/bt-menu.lua"))
+
+-- Toggle control center (ags)
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("ags toggle control-center"))
+
+-- Lock screen
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
+
+-- Lock on lid close (logind suspends, so lock before it; lid-open bind is a safety net)
+hl.bind("switch:on:Lid Switch",  hl.dsp.exec_cmd("pgrep -x hyprlock >/dev/null || hyprlock"), { locked = true })
+hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("pgrep -x hyprlock >/dev/null || hyprlock"), { locked = true })
+
+-- Toggle notification center (swaync)
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -t"))
+
+-- Wifi networks menu (rofi)
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("/home/zzz/.config/waybar/net-menu.lua"))
+
+-- Laptop multimedia keys for volume and LCD brightness (swayosd OSD bar, wpctl fallback)
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise || wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume lower || wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
+hl.bind(mainMod .. " + Up", hl.dsp.exec_cmd("swayosd-client --input-volume raise || wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+"), { locked = true, repeating = true })
+hl.bind(mainMod .. " + Down", hl.dsp.exec_cmd("swayosd-client --input-volume lower || wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"), { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle || wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("swayosd-client --input-volume mute-toggle || wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("swayosd-client --brightness raise || brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("swayosd-client --brightness lower || brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
 
 -- Requires playerctl
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
