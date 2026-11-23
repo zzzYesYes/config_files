@@ -56,6 +56,28 @@ vim.lsp.config("pyright", {
   },
 })
 
+local jdk25 = "/opt/homebrew/opt/openjdk@25/libexec/openjdk.jdk/Contents/Home"
+
+vim.env.JDTLS_JVM_ARGS = "-javaagent:" .. vim.fn.expand("~/.local/share/java/lombok.jar")
+
+vim.lsp.config("jdtls", {
+  cmd_env = { JAVA_HOME = jdk25 },
+  settings = {
+    java = {
+      import = {
+        gradle = {
+          java = { home = jdk25 },
+        },
+      },
+      configuration = {
+        runtimes = {
+          { name = "JavaSE-25", path = jdk25, default = true },
+        },
+      },
+    },
+  },
+})
+
 vim.lsp.enable("jdtls")
 
 require("mason").setup({
