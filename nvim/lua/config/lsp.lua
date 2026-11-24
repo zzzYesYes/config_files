@@ -46,24 +46,56 @@ vim.lsp.config("lua_ls", {
   },
 })
 
-vim.lsp.config("pyright", {
+-- ty: Rust-based Python type checker + LSP (astral-sh), no Node.js needed.
+-- https://docs.astral.sh/ty/reference/editor-settings/
+vim.lsp.config("ty", {})
+
+local jdk25 = "/opt/homebrew/opt/openjdk@25/libexec/openjdk.jdk/Contents/Home"
+
+vim.env.JDTLS_JVM_ARGS = "-javaagent:" .. vim.fn.expand("~/.local/share/java/lombok.jar")
+
+vim.lsp.config("jdtls", {
+  cmd_env = { JAVA_HOME = jdk25 },
   settings = {
-    python = {
-      analysis = {
-        typeCheckingMode = "basic",
+    java = {
+      import = {
+        gradle = {
+          java = { home = jdk25 },
+        },
+      },
+      configuration = {
+        runtimes = {
+          { name = "JavaSE-25", path = jdk25, default = true },
+        },
       },
     },
   },
 })
 
+vim.lsp.enable("jdtls")
+
 require("mason").setup({
   PATH = "append",
 })
 
+local ensure_installed = {
+  "lua_ls",
+  "ty",
+}
+
+-- mason has no prebuilt clangd for linux/arm64; use the system package
+-- (e.g. `apt install clangd`) on those machines instead.
+local uname = vim.uv.os_uname()
+local is_linux_arm = uname.sysname == "Linux" and (uname.machine == "aarch64" or uname.machine == "arm64")
+if not is_linux_arm then
+  table.insert(ensure_installed, "clangd")
+end
+
 require("mason-lspconfig").setup({
-  ensure_installed = {
-    "lua_ls",
-    "pyright",
-    "clangd",
-  },
+  ensure_installed = ensure_installed,
 })
+
+-- Pick up a system-installed clangd (not managed by mason).
+if is_linux_arm and vim.fn.executable("clangd") == 1 then
+  vim.lsp.enable("clangd")
+end

@@ -45,8 +45,18 @@ return {
 
       local win = open_window(buffer)
       if is_new then
+        local root = require("config.project").root()
         vim.api.nvim_win_call(win, function()
-          vim.fn.jobstart({ "opencode" }, { term = true })
+          vim.fn.jobstart({ "opencode", root }, {
+            term = true,
+            cwd = root,
+            env = {
+              OPENCODE_CLI_CONFIG_CONTENT = vim.json.encode({
+                session = { new_location = "launch" },
+                tabs = { scope = "cwd" },
+              }),
+            },
+          })
         end)
       end
     end

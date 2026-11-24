@@ -28,6 +28,14 @@ wk.add({
     { "<leader>sc", "<cmd>Telescope colorscheme<cr>",                            desc = "Search colorscheme" },
     { "<leader>sf", function() require("config.project").find_files() end,         desc = "Search file by name" },
     { "<leader>sg", function() require("config.project").live_grep() end,          desc = "Search with ripgrep" },
+    {
+        "<leader>sw",
+        function()
+            require("telescope.builtin").grep_string({ cwd = require("config.project").root() })
+        end,
+        desc = "Search word or selection",
+        mode = { "n", "x" },
+    },
     { "<leader>sh", "<cmd>Telescope help_tags<cr>",                              desc = "Search help tags" },
     { "<leader>t",  group = "Tab lines" },
     { "<leader>tc", "<cmd>BufferClose<cr>",                                      desc = "close tab" },
