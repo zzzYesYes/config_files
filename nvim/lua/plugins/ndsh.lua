@@ -8,7 +8,7 @@ return {
                 sessions = "<leader>ans",
                 messages = "<leader>anm",
                 resume = "<leader>anr",
-                new_session = "<leader>ann",
+                new_session = false, -- create sessions with /new instead
             },
         })
 
@@ -18,7 +18,6 @@ return {
             { "<leader>ans", desc = "Search ndsh sessions" },
             { "<leader>anm", desc = "Scan ndsh messages" },
             { "<leader>anr", desc = "Resume last ndsh session" },
-            { "<leader>ann", desc = "New ndsh session" },
         })
     end,
 }
