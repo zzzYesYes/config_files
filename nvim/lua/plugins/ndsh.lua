@@ -8,6 +8,8 @@ return {
                 sessions = "<leader>ans",
                 messages = "<leader>anm",
                 resume = "<leader>anr",
+                model = "<leader>anM",
+                reasoning = "<leader>ane",
                 new_session = false, -- create sessions with /new instead
             },
         })
@@ -18,6 +20,8 @@ return {
             { "<leader>ans", desc = "Search ndsh sessions" },
             { "<leader>anm", desc = "Scan ndsh messages" },
             { "<leader>anr", desc = "Resume last ndsh session" },
+            { "<leader>anM", desc = "Select ndsh model" },
+            { "<leader>ane", desc = "Select reasoning effort" },
         })
     end,
 }
