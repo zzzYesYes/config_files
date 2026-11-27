@@ -10,6 +10,7 @@ return {
                 resume = "<leader>anr",
                 model = "<leader>anM",
                 reasoning = "<leader>ane",
+                connect = "<leader>anp",
                 new_session = false, -- create sessions with /new instead
             },
         })
@@ -22,6 +23,7 @@ return {
             { "<leader>anr", desc = "Resume last ndsh session" },
             { "<leader>anM", desc = "Select ndsh model" },
             { "<leader>ane", desc = "Select reasoning effort" },
+            { "<leader>anp", desc = "Connect ndsh provider" },
         })
     end,
 }
